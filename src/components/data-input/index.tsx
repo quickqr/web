@@ -1,6 +1,6 @@
 import {Card} from "../card";
 import styles from "./styles.module.sass"
-import {createSignal} from "solid-js";
+import {createEffect, createSignal, onCleanup} from "solid-js";
 
 interface Props {
     onChange: (data: string) => void
@@ -10,8 +10,17 @@ interface Props {
 // 1. Allow to send files on the server side (find the way to send any data (both binary, alphanum and text)
 // 2. Uncomment and update code below
 export function DataInput(props: Props) {
-    let [selectedFilename, setSelectedFilename] = createSignal<string | null>(null)
     // let fileInput!: HTMLInputElement;
+    let [selectedFilename, setSelectedFilename] = createSignal<string | null>(null)
+    let debounceTimeout: number;
+
+    createEffect(() => {
+        clearTimeout(debounceTimeout)
+        debounceTimeout = setTimeout(() => {
+        }, 300)
+    })
+
+    onCleanup(() => clearTimeout(debounceTimeout))
 
     // function onFileInput(event: Event & { currentTarget: HTMLInputElement }) {
     //     const file = event.currentTarget.files![0];
@@ -43,7 +52,10 @@ export function DataInput(props: Props) {
                 placeholder={selectedFilename() ? `${selectedFilename()} (click remove)` : "Input data the QR code will contain"}
                 onClick={() => setSelectedFilename(null)}
                 onFocus={() => setSelectedFilename(null)}
-                onInput={(v) => props.onChange(v.currentTarget.value)}
+                onInput={(v) => {
+                    clearTimeout(debounceTimeout)
+                    debounceTimeout = setTimeout(() => props.onChange((v.target as HTMLInputElement).value), 700)
+                }}
             />
 
             {/*TODO*/}
