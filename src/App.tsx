@@ -1,11 +1,10 @@
-import type { Component } from 'solid-js';
+import type {Component} from 'solid-js';
+import {Sidebar} from "./components/sidebar";
 
 const App: Component = () => {
-  return (
-    <div>
-      Hello, GitLab!
-    </div>
-  );
+    return (
+        <Sidebar/>
+    );
 };
 
 export default App;

@@ -1,7 +1,8 @@
 {
   "name": "quick-qr-website",
   "version": "0.0.0",
-  "description": "",
+  "description": "Quick QR website to quickly design QR codes in Web-UI",
+  "homepage": "https://gitlab.com/quick-qr",
   "scripts": {
     "start": "vite",
     "dev": "vite",

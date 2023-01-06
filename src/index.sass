@@ -1,5 +1,28 @@
-body 
-  margin: 0 
-  font-family: -apple-system, BlinkMacSystemFont, 'Ubuntu', sans-serif 
-  -webkit-font-smoothing: antialiased 
-  -moz-osx-font-smoothing: grayscale 
+//noinspection CssUnknownTarget
+@import url(https://fonts.googleapis.com/css2?family=Poppins&display=swap)
+
+\:root
+  --background-color: #171717
+  --accent-color: #87EE63
+  --card-color: #1D1D1D
+  --text: #ffffff
+  --dark-text: #545454
+
+body
+  color: var(--text)
+  display: flex
+  background: var(--background-color)
+  margin: 0
+  font-family: -apple-system, BlinkMacSystemFont, 'Rubik Mono One', sans-serif
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+
+html, body, #root
+  height: 100%
+  width: 100%
+  box-sizing: border-box
+
+#root
+  margin: auto
+  padding: 1em
+  max-width: 1440px

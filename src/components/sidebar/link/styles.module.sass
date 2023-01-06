@@ -1,0 +1,27 @@
+.link
+  display: flex
+  flex-direction: column
+  align-items: center
+
+  font-size: 14px
+  margin-bottom: 2em
+  color: var(--dark-text)
+
+  user-select: none
+  cursor: pointer
+  text-decoration: none
+
+  &:last-child
+    margin-bottom: 0
+
+  &:hover
+    img
+      filter: grayscale(0)
+      opacity: 1
+
+  img
+    width: 40px
+    transition: 0.5s
+    opacity: 0.3
+    filter: grayscale(1)
+    margin-bottom: 0.5em
