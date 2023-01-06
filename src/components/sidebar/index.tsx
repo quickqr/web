@@ -1,7 +1,7 @@
 import styles from "./styles.module.sass"
 import Logo from "../../assets/icons/logo.svg"
 import GitLabIcon from "../../assets/icons/gitlab.svg"
-import ApiIcon from "../../assets/icons/api.svg"
+import ApiIcon from "../../assets/icons/api.svg?component-solid"
 import packageInfo from "../../../package.json"
 import {SidebarLink} from "./link";
 
@@ -15,7 +15,12 @@ export function Sidebar() {
         <div>
             <SidebarLink logo={GitLabIcon} title={"Source"} href={packageInfo.homepage} invertLogo/>
             {/* TODO: Decide what URL to set for this (probably from .env and "/docs" by default) */}
-            <SidebarLink logo={ApiIcon} title={"Docs"} href={"https://todo.com"}/>
+            <SidebarLink
+                forceAccentColor
+                logo={ApiIcon}
+                title={"Docs"}
+                href={"https://todo.com"}
+            />
         </div>
     </div>
 }

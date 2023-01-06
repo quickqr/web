@@ -1,0 +1,33 @@
+.linkContainer
+  padding: 0 1em
+  margin: 1rem auto auto
+  display: flex
+  justify-content: space-between
+  align-items: center
+  border: 1px solid var(--background-color)
+  border-radius: 20px
+  transition: 0.5s
+  user-select: none
+  cursor: pointer
+
+  &:hover
+    background: var(--background-color)
+
+  .text
+    padding: 1em
+
+    .title
+      font-weight: bold
+      display: block
+      font-size: 16px
+
+    .description
+      font-size: 0.8rem
+      color: var(--dark-text)
+
+  button
+    border-radius: 15px
+    height: min-content
+    padding: 0.5em 1em
+    background: var(--accent-color)
+    color: var(--card-color)
