@@ -23,6 +23,37 @@ html, body, #root
   box-sizing: border-box
 
 #root
+  //justify-content: space-between
+  display: flex
   margin: auto
-  padding: 1em
+  padding: 4em 1em 1em
   max-width: 1440px
+
+div.main
+  flex-grow: 1
+  margin: 0 4em
+
+input
+  background: var(--background-color)
+  border: none
+  color: var(--text)
+  font-size: 20px
+  border-radius: 20px
+  padding: 1em
+  outline: none
+
+  &::placeholder
+    color: var(--dark-text)
+
+button
+  cursor: pointer
+  padding: 1em
+  white-space: nowrap
+  background: var(--background-color)
+  color: var(--dark-text)
+  border-radius: 20px
+  border: none
+  transition: 0.3s
+
+  &:hover
+    opacity: 0.8

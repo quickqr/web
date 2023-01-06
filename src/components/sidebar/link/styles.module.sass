@@ -14,9 +14,9 @@
   &:last-child
     margin-bottom: 0
 
-  &:hover
+  &:hover, &.invert:hover
     img
-      filter: grayscale(0)
+      filter: grayscale(0) invert(0)
       opacity: 1
 
   img
@@ -25,3 +25,7 @@
     opacity: 0.3
     filter: grayscale(1)
     margin-bottom: 0.5em
+
+  &.invert
+    img
+      filter: grayscale(1) invert(1)

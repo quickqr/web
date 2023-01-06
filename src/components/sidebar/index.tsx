@@ -13,7 +13,7 @@ export function Sidebar() {
         </div>
 
         <div>
-            <SidebarLink logo={GitLabIcon} title={"Source"} href={packageInfo.homepage}/>
+            <SidebarLink logo={GitLabIcon} title={"Source"} href={packageInfo.homepage} invertLogo/>
             {/* TODO: Decide what URL to set for this (probably from .env and "/docs" by default) */}
             <SidebarLink logo={ApiIcon} title={"Docs"} href={"https://todo.com"}/>
         </div>
