@@ -1,27 +1,29 @@
-.qrcodePreview
-  overflow: hidden
-  margin-top: 2rem
-  background: var(--background-color)
-  border-radius: 30px
-  height: 256px
-  width: 256px
-  display: flex
-  justify-content: center
-  align-items: center
+.previewContainer
+  width: calc(256px + 2.5em)
 
-  img.imagePreview
+  .qrcodePreview
     width: 100%
+    aspect-ratio: 1
+    overflow: hidden
+    background: var(--background-color)
+    border-radius: 30px
+    display: flex
+    justify-content: center
+    align-items: center
+
+    img.imagePreview
+      width: 100%
 
 
-  span
+    span
+      color: var(--dark-text)
+      text-align: center
+      font-size: 30px
+
+  .sizeNote
     color: var(--dark-text)
+    margin: 1em auto 3em
     text-align: center
-    font-size: 30px
-
-.sizeNote
-  color: var(--dark-text)
-  margin: 1em 0 3em
-  text-align: center
-  display: block
-  max-width: calc(256px - 1em)
-  word-wrap: break-word
+    display: block
+    max-width: calc(256px - 1em)
+    word-wrap: break-word

@@ -4,6 +4,11 @@ import {QRConfig} from "../../types";
 import {createEffect, createSignal, Show} from "solid-js";
 import axios from "axios";
 import {LoadingIcon} from "../loading-icon";
+import LinkLogo from "../../assets/icons/link.svg"
+import PngLogo from "../../assets/icons/png.svg"
+import ApiLogo from "../../assets/icons/api.svg"
+import {PreviewLink} from "./link";
+import {objectToURLQueryParam} from "../../utils";
 
 interface Props {
     config: QRConfig
@@ -30,7 +35,7 @@ export function PreviewSidebar(props: Props) {
         }
     })
 
-    return <Card title="Preview">
+    return <Card title="Preview" containerClass={styles.previewContainer}>
         <div class={styles.qrcodePreview}>
             <Show when={!isLoading()} keyed fallback={<LoadingIcon size={50}/>}>
                 <Show when={previewImage()} keyed fallback={<span>No preview <br/>yet</span>}>
@@ -43,5 +48,29 @@ export function PreviewSidebar(props: Props) {
             Note: preview image does not reflect actual image size
         </span>
 
+        <h1>Links</h1>
+        <PreviewLink
+            title="Link to this page" description="Share this configuration of QR with your friends."
+            logo={LinkLogo} buttonText="Copy" buttonClickedText="Copied"
+            onClick={() => {
+                const link = `${document.location.href}?${objectToURLQueryParam(props.config)}`
+                navigator.clipboard.writeText(link)
+            }}
+        />
+        <PreviewLink
+            title="Link to image" description="Directly share image above with anybody"
+            logo={PngLogo} buttonText="Copy" buttonClickedText="Copied"
+            onClick={() => {
+                const link = `${import.meta.env.VITE_API_URL}/generate?${objectToURLQueryParam(props.config)}`
+                navigator.clipboard.writeText(link)
+            }}
+        />
+        <PreviewLink
+            title="API Request" description="See how to make this QR Code truly dynamic with Quick QR’s API"
+            logo={ApiLogo} buttonText="Show"
+            onClick={() => {
+                // TODO: show modal
+            }}
+        />
     </Card>
 }

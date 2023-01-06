@@ -7,6 +7,7 @@ import {QRConfig, RecoveryLevel} from "./types.d";
 
 // TODO: Add timeout
 const App: Component = () => {
+    // TODO: Load config from URL params if any
     const [config, setConfig] = createSignal<QRConfig>({
         size: 512,
         backgroundColor: "#ffffff",

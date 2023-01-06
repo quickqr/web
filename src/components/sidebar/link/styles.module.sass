@@ -15,17 +15,20 @@
     margin-bottom: 0
 
   &:hover, &.invert:hover
-    img
+    img, svg
       filter: grayscale(0) invert(0)
       opacity: 1
 
-  img
+  img, svg
     width: 40px
     transition: 0.5s
     opacity: 0.3
     filter: grayscale(1)
     margin-bottom: 0.5em
 
+  &.forceAccentColor svg path
+    fill: var(--accent-color)
+
   &.invert
-    img
+    img, svg
       filter: grayscale(1) invert(1)
