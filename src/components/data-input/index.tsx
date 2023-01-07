@@ -1,6 +1,6 @@
 import {Card} from "../card";
 import styles from "./styles.module.sass"
-import {createEffect, createSignal, onCleanup} from "solid-js";
+import {createSignal, onCleanup} from "solid-js";
 
 interface Props {
     onChange: (data: string) => void
@@ -10,18 +10,13 @@ interface Props {
 // 1. Allow to send files on the server side (find the way to send any data (both binary, alphanum and text)
 // 2. Uncomment and update code below
 export function DataInput(props: Props) {
-    // let fileInput!: HTMLInputElement;
-    let [selectedFilename, setSelectedFilename] = createSignal<string | null>(null)
+    // Time that has to pass after last key input before onChange fires
+    const debounceMaxTime = 2000
     let debounceTimeout: number;
-
-    createEffect(() => {
-        clearTimeout(debounceTimeout)
-        debounceTimeout = setTimeout(() => {
-        }, 300)
-    })
+    let [selectedFilename, setSelectedFilename] = createSignal<string | null>(null)
+    // let fileInput!: HTMLInputElement;
 
     onCleanup(() => clearTimeout(debounceTimeout))
-
     // function onFileInput(event: Event & { currentTarget: HTMLInputElement }) {
     //     const file = event.currentTarget.files![0];
     //     if (!file) return;
@@ -54,12 +49,12 @@ export function DataInput(props: Props) {
                 onFocus={() => setSelectedFilename(null)}
                 onInput={(v) => {
                     clearTimeout(debounceTimeout)
-                    debounceTimeout = setTimeout(() => props.onChange((v.target as HTMLInputElement).value), 700)
+                    debounceTimeout = setTimeout(() => props.onChange((v.target as HTMLInputElement).value), debounceMaxTime)
                 }}
             />
 
             {/*TODO*/}
-            {/*<button onClick={() => fileInput.click()} class="bigButton">Attach file</button>*/}
+            {/*<button  onClick={() => fileInput.click()}>Attach file</button>*/}
             {/*<input ref={fileInput} onChange={onFileInput} hidden type="file"/>*/}
 
         </div>

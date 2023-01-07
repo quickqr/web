@@ -51,7 +51,7 @@ export function PreviewSidebar(props: Props) {
         <h1>Export</h1>
         <PreviewLink
             title="As image" description="Save the QR as a file"
-            logo={PngLogo} buttonText="Download"
+            logo={PngLogo} buttonText="Save"
             isDisabled={!previewImage()}
             onClick={() => {
                 const a = document.createElement("a")
@@ -67,7 +67,9 @@ export function PreviewSidebar(props: Props) {
             description="Copy link to this page to share your work (no attached files)"
             logo={LinkLogo} buttonText="Copy" buttonClickedText="Copied"
             onClick={() => {
-                const {data, logo, ...config} = props.config;
+                // TODO: check if logo is an URL, if so, add to the config
+                const {logo, ...config} = props.config;
+
                 const link = `${document.location.href}?${objectToURLQueryParam(config)}`
                 navigator.clipboard.writeText(link)
             }}
