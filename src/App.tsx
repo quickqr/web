@@ -3,19 +3,12 @@ import {createSignal} from "solid-js";
 import {Sidebar} from "./components/sidebar";
 import {DataInput} from "./components/data-input";
 import {PreviewSidebar} from "./components/preview";
-import {QRConfig, RecoveryLevel} from "./types.d";
+import {QRConfig} from "./types";
 
 // TODO: Add timeout
 const App: Component = () => {
     // TODO: Load config from URL params if any
-    const [config, setConfig] = createSignal<QRConfig>({
-        size: 512,
-        backgroundColor: "#ffffff",
-        logoScale: 0.2,
-        recoveryLevel: RecoveryLevel.Medium,
-        borderSize: 30,
-        foregroundColor: "#000000",
-    })
+    const [config, setConfig] = createSignal<QRConfig>({})
 
     return (
         <>

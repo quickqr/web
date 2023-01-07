@@ -8,11 +8,11 @@ export enum RecoveryLevel {
 
 export interface QRConfig {
     data?: string
-    size: number,
-    backgroundColor: string,
-    foregroundColor: string
+    size?: number,
+    backgroundColor?: string,
+    foregroundColor?: string
     logo?: string
-    logoScale: number
-    borderSize: number
-    recoveryLevel: RecoveryLevel
+    logoScale?: number
+    borderSize?: number
+    recoveryLevel?: RecoveryLevel
 }
