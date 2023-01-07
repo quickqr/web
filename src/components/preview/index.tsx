@@ -39,7 +39,7 @@ export function PreviewSidebar(props: Props) {
         <div class={styles.qrcodePreview}>
             <Show when={!isLoading()} keyed fallback={<LoadingIcon size={50}/>}>
                 <Show when={previewImage()} keyed fallback={<span>No preview <br/>yet</span>}>
-                    <img class={styles.imagePreview} src={previewImage()}/>
+                    <img class={styles.imagePreview} src={previewImage()} alt=""/>
                 </Show>
             </Show>
         </div>
@@ -48,9 +48,23 @@ export function PreviewSidebar(props: Props) {
             Note: preview image does not reflect actual image size
         </span>
 
-        <h1>Links</h1>
+        <h1>Export</h1>
         <PreviewLink
-            title="Link to this page" description="Share this configuration of QR with your friends."
+            title="As image" description="Save the QR as a file"
+            logo={PngLogo} buttonText="Download"
+            isDisabled={!previewImage()}
+            onClick={() => {
+                const a = document.createElement("a")
+                a.href = previewImage()
+                a.download = "quick-qr.png"
+                a.click()
+
+                a.remove()
+            }}
+        />
+        <PreviewLink
+            title="As preset"
+            description="Copy link to this page to share your work (no attached files)"
             logo={LinkLogo} buttonText="Copy" buttonClickedText="Copied"
             onClick={() => {
                 const {data, logo, ...config} = props.config;
@@ -59,21 +73,7 @@ export function PreviewSidebar(props: Props) {
             }}
         />
         <PreviewLink
-            title="Link to image" description="Directly share image above with anybody"
-            logo={PngLogo} buttonText="Copy" buttonClickedText="Copied"
-            onClick={() => {
-                const {logo, ...config} = props.config;
-                if (!config.data) {
-                    // TODO:
-                    return
-                }
-
-                const link = `${import.meta.env.VITE_API_URL}/generate?${objectToURLQueryParam(config)}`
-                navigator.clipboard.writeText(link)
-            }}
-        />
-        <PreviewLink
-            title="API Request" description="See how to make this QR Code truly dynamic with Quick QR’s API"
+            title="For developers" description="See how to make your design dynamic with API"
             logo={ApiLogo} buttonText="Show"
             onClick={() => {
                 // TODO: show modal

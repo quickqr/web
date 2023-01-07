@@ -8,13 +8,17 @@ interface Props {
     buttonText: string
     // Text to show when button is clicked
     buttonClickedText?: string
+    // Works only if `isDisabled` == true
     onClick: () => void
+    isDisabled?: boolean
 }
 
 export function PreviewLink(props: Props) {
     const [buttonText, setButtonText] = createSignal(props.buttonText)
 
     function onButtonClick() {
+        if (props.isDisabled) return
+
         if (props.buttonClickedText) {
             setButtonText(props.buttonClickedText)
             setTimeout(() => setButtonText(props.buttonText), 1500)
@@ -29,6 +33,6 @@ export function PreviewLink(props: Props) {
             <span class={styles.title}>{props.title}</span>
             <span class={styles.description}>{props.description}</span>
         </div>
-        <button class={styles.actionButton}>{buttonText()}</button>
+        <button classList={{[styles.disabled]: props.isDisabled}} class={styles.actionButton}>{buttonText()}</button>
     </div>
 }
