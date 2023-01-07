@@ -33,6 +33,6 @@ export function PreviewLink(props: Props) {
             <span class={styles.title}>{props.title}</span>
             <span class={styles.description}>{props.description}</span>
         </div>
-        <button classList={{[styles.disabled]: props.isDisabled}} class={styles.actionButton}>{buttonText()}</button>
+        <button classList={{"accent": !props.isDisabled}} class={styles.actionButton}>{buttonText()}</button>
     </div>
 }

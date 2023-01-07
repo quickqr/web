@@ -52,11 +52,25 @@ button
   background: var(--background-color)
   color: var(--dark-text)
   border-radius: 20px
+  height: min-content
   border: none
   transition: 0.3s
+
+  &.accent
+    background: var(--accent-color)
 
   &:hover
     opacity: 0.8
 
 h1
   font-size: 25px
+
+section.configuration
+  margin-top: 3em
+  display: grid
+  grid-template-columns: 1fr 1fr
+  column-gap: 2em
+
+  div.col
+    display: grid
+    row-gap: 2em
