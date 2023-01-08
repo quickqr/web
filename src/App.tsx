@@ -6,6 +6,7 @@ import {PreviewSidebar} from "./components/preview";
 import {QRConfig} from "./types";
 import {Card} from "./components/card";
 import {ColorPicker} from "./components/configuration/color-picker";
+import {NumberInput} from "./components/configuration/number-input";
 
 // TODO: Add timeout
 const App: Component = () => {
@@ -23,15 +24,31 @@ const App: Component = () => {
                 }}/>
                 <section class="configuration">
                     <div class="col">
-                        <Card title="Colors" containerClass="config-card">
-                            <ColorPicker title="Background" color={config().backgroundColor ?? "#ffffff"}
-                                         onChange={(v) => {
-                                             setConfig({...config(), backgroundColor: v})
-                                         }}/>
-                            <ColorPicker title="Foreground" color={config().foregroundColor ?? "#000000"}
-                                         onChange={(v) => {
-                                             setConfig({...config(), foregroundColor: v})
-                                         }}/>
+                        <Card title="General" containerClass="config-card">
+                            <ColorPicker
+                                label="Background"
+                                color={config().backgroundColor ?? "#ffffff"}
+                                onChange={(v) => {
+                                    setConfig({...config(), backgroundColor: v})
+                                }}
+                            />
+                            <ColorPicker
+                                label="Foreground"
+                                color={config().foregroundColor ?? "#000000"}
+                                onChange={(v) => {
+                                    setConfig({...config(), foregroundColor: v})
+                                }}
+                            />
+                            <NumberInput
+                                label="Image size"
+                                value={config().size ?? 512}
+                                onChange={(n) => setConfig({...config(), size: n})}
+                            />
+                            <NumberInput
+                                label="Border size"
+                                value={config().borderSize ?? 30}
+                                onChange={(n) => setConfig({...config(), borderSize: n})}
+                            />
                         </Card>
                     </div>
                     <div class="col">

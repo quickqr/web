@@ -4,7 +4,7 @@ import "./picker.sass"
 import {createSignal, onMount} from "solid-js";
 
 interface Props {
-    title: string
+    label: string
     color: string
     onChange: (s: string) => void
 }
@@ -97,7 +97,7 @@ export function ColorPicker(props: Props) {
         <div onClick={showPopup} class={styles.colorInfo}>
             <div class={styles.colorPreview}
                  style={{"background-color": pickedColor()}}/>
-            <span>{props.title}</span>
+            <span>{props.label}</span>
         </div>
         <button onClick={showPopup}>Change</button>
     </div>

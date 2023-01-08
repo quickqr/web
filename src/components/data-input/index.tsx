@@ -1,6 +1,7 @@
 import {Card} from "../card";
 import styles from "./styles.module.sass"
 import {createSignal, onCleanup} from "solid-js";
+import {DebouncedInput} from "../debounced-input";
 
 interface Props {
     onChange: (data: string) => void
@@ -40,7 +41,7 @@ export function DataInput(props: Props) {
 
     return <Card title="QR Code data" containerClass={styles.container}>
         <div class={styles.inputRow}>
-            <input
+            <DebouncedInput
                 type="text"
                 autocomplete="off"
                 classList={{[styles.fileName]: !!selectedFilename()}}
@@ -48,8 +49,7 @@ export function DataInput(props: Props) {
                 onClick={() => setSelectedFilename(null)}
                 onFocus={() => setSelectedFilename(null)}
                 onInput={(v) => {
-                    clearTimeout(debounceTimeout)
-                    debounceTimeout = setTimeout(() => props.onChange((v.target as HTMLInputElement).value), debounceMaxTime)
+                    props.onChange((v.target as HTMLInputElement).value)
                 }}
             />
 

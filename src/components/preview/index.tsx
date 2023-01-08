@@ -19,6 +19,7 @@ export function PreviewSidebar(props: Props) {
     const [isLoading, setLoadingState] = createSignal(false)
 
     createEffect(async () => {
+        console.log(props.config.size)
         if (!props.config.data) {
             return setPreviewImage("")
         }
