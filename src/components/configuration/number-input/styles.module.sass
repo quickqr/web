@@ -10,24 +10,24 @@
     align-items: center
     justify-content: flex-end
 
-    span
+    span.unit
       color: var(--dark-text)
       text-transform: uppercase
 
-    input
-      direction: RTL
-      border-radius: 10px
-      width: 2.5em
-      color: var(--dark-text)
-      padding: 0.5em 1em
-      margin-right: 0.5em
-      font-size: 15px
-      background: transparent
+    .input
+      margin-right: 0.7em
 
-      -moz-appearance: textfield
+      input
+        width: 5em
+        text-align: center
+        border-radius: 10px
+        color: var(--dark-text)
+        padding: 0.3em 1em
+        font-size: 15px
+        background: transparent
 
-      &:focus
-        outline: 0.5px solid var(--accent-color)
+        -moz-appearance: textfield
+
 //&::-webkit-outer-spin-button,
 //&::-webkit-inner-spin-button
 //  -webkit-appearance: none

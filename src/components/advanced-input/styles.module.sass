@@ -1,0 +1,28 @@
+.container
+  width: 100%
+  position: relative
+  vertical-align: center
+  transition: 0.5s
+
+  input
+    box-sizing: border-box
+    width: 100%
+
+  .inputTooltip
+    display: flex
+    align-items: center
+    box-shadow: 0 0 1px var(--dark-text)
+    border-radius: 15px
+    padding: 1em
+    position: absolute
+    z-index: 1
+    top: calc(100% + 10px)
+    left: -100%
+    min-width: 100px
+    background: var(--background-color)
+
+  svg
+    margin-right: 1rem
+
+    path
+      fill: var(--red)

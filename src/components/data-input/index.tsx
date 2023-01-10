@@ -1,7 +1,7 @@
 import {Card} from "../card";
 import styles from "./styles.module.sass"
 import {createSignal, onCleanup} from "solid-js";
-import {DebouncedInput} from "../debounced-input";
+import {AdvancedInput} from "../advanced-input";
 
 interface Props {
     onChange: (data: string) => void
@@ -11,8 +11,6 @@ interface Props {
 // 1. Allow to send files on the server side (find the way to send any data (both binary, alphanum and text)
 // 2. Uncomment and update code below
 export function DataInput(props: Props) {
-    // Time that has to pass after last key input before onChange fires
-    const debounceMaxTime = 2000
     let debounceTimeout: number;
     let [selectedFilename, setSelectedFilename] = createSignal<string | null>(null)
     // let fileInput!: HTMLInputElement;
@@ -41,9 +39,10 @@ export function DataInput(props: Props) {
 
     return <Card title="QR Code data" containerClass={styles.container}>
         <div class={styles.inputRow}>
-            <DebouncedInput
+            <AdvancedInput
                 type="text"
                 autocomplete="off"
+                class={styles.input}
                 classList={{[styles.fileName]: !!selectedFilename()}}
                 placeholder={selectedFilename() ? `${selectedFilename()} (click remove)` : "Input data the QR code will contain"}
                 onClick={() => setSelectedFilename(null)}

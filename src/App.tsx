@@ -42,11 +42,15 @@ const App: Component = () => {
                             <NumberInput
                                 label="Image size"
                                 value={config().size ?? 512}
+                                min={128}
+                                max={4096}
                                 onChange={(n) => setConfig({...config(), size: n})}
                             />
                             <NumberInput
                                 label="Border size"
                                 value={config().borderSize ?? 30}
+                                min={0}
+                                max={100}
                                 onChange={(n) => setConfig({...config(), borderSize: n})}
                             />
                         </Card>

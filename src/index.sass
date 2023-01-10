@@ -7,6 +7,7 @@
   --card-color: #1D1D1D
   --text: #ffffff
   --dark-text: #545454
+  --red: #F05555
 
 body
   color: var(--text)
@@ -23,7 +24,6 @@ html, body, #root
   box-sizing: border-box
 
 #root
-  //justify-content: space-between
   display: flex
   margin: auto
   padding: 4em 1em 1em
@@ -40,10 +40,14 @@ input
   font-size: 20px
   border-radius: 20px
   padding: 1em
-  outline: none
+  transition: 0.3s
+  outline: 0.5px solid transparent
 
   &::placeholder
     color: var(--dark-text)
+
+  &:focus
+    outline: 0.5px solid var(--accent-color)
 
 button
   cursor: pointer
