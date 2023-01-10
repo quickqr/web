@@ -45,7 +45,8 @@ export function PreviewSidebar(props: Props) {
             </Show>
         </div>
 
-        <span class={styles.sizeNote}>
+        {/* TOOD: Put error message here (if present) */}
+        <span class={styles.note}>
             Note: images larger than 256px are resized to fit preview window
         </span>
 

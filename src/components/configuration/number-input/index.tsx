@@ -42,7 +42,7 @@ export function NumberInput(props: Props) {
                 class={styles.input}
                 validate={validateNumber}
                 value={props.value}
-                onInput={(e) => props.onChange(parseInt((e.target as HTMLInputElement ?? "0").value))}
+                onInput={(e) => props.onChange(parseInt((e.target as HTMLInputElement || "0").value))}
             />
             <span class={styles.unit}>{props.unit ?? "px"}</span>
         </div>
