@@ -1,4 +1,4 @@
-import {createSignal, JSX, onCleanup, Show} from "solid-js";
+import {createSignal, JSX, onCleanup} from "solid-js";
 import CrossSvg from "../../assets/icons/cross.svg?component-solid"
 import styles from "./styles.module.sass"
 
@@ -13,9 +13,17 @@ interface Props {
 export function AdvancedInput(props: Props & Omit<JSX.InputHTMLAttributes<HTMLInputElement>, "ref">) {
     let inputRef!: HTMLInputElement;
     const initialValue = props.value
-    const [validationMessage, setValidationMessage] = createSignal<string>()
-    const resetValidationMessage = () => setValidationMessage(undefined)
     let debounceTimeout: number;
+
+    const [isTooltipVisible, setTooltipVisible] = createSignal(false)
+    const [tooltipMessage, setTooltipMessage] = createSignal<string>()
+    const resetTooltipMessage = () => {
+        setTooltipVisible(false)
+        // This helps to get rid of issue with tooltip text disappears faster than tooltip
+        setTimeout(() => {
+            setTooltipMessage(undefined)
+        }, 350)
+    }
 
     onCleanup(() => clearTimeout(debounceTimeout))
 
@@ -24,11 +32,12 @@ export function AdvancedInput(props: Props & Omit<JSX.InputHTMLAttributes<HTMLIn
         const invalidMessage = props.validate?.(v) ?? "";
 
         if (invalidMessage) {
-            setValidationMessage(invalidMessage)
+            setTooltipVisible(true)
+            setTooltipMessage(invalidMessage)
             return
         }
 
-        resetValidationMessage()
+        resetTooltipMessage()
         clearTimeout(debounceTimeout)
         // @ts-ignore
         debounceTimeout = setTimeout(() => props.onInput?.(e), props.debounceTime ?? 2000)
@@ -36,20 +45,20 @@ export function AdvancedInput(props: Props & Omit<JSX.InputHTMLAttributes<HTMLIn
 
     function onFocusout() {
         // Reset input if there was some validation errors
-        if (validationMessage()) {
+        if (tooltipMessage()) {
             clearTimeout(debounceTimeout)
-            resetValidationMessage()
+            resetTooltipMessage()
             inputRef.value = String(initialValue)
         }
     }
 
     return <div class={`${styles.container} ${props.class}`}>
-        <Show when={validationMessage()} keyed>
-            <div class={styles.inputTooltip}>
-                <CrossSvg/>
-                <span>{validationMessage()}</span>
-            </div>
-        </Show>
+        {/*<Show when={validationMessage()} keyed>*/}
+        <div class={styles.inputTooltip} classList={{[styles.visible]: isTooltipVisible()}}>
+            <CrossSvg/>
+            <span>{tooltipMessage()}</span>
+        </div>
+        {/*</Show>*/}
         <input
             {...props}
             class={""}
