@@ -1,0 +1,78 @@
+.codeblock-container
+  --font-size: 15px
+  --padding: 1em
+  display: flex
+  align-items: center
+  box-sizing: border-box
+
+
+.codeblock-label
+  font-size: var(--font-size)
+  padding: var(--padding)
+  color: var(--card-color)
+  border-radius: 15px 0 0 15px
+
+pre
+  flex: 1
+  margin: 0
+  overflow-x: scroll
+  overflow-y: hidden
+  position: relative
+  padding: 0
+  border-radius: 0 15px 15px 0
+
+  &.multiline
+    border-radius: 15px
+
+    .copy-button
+      top: 0
+      margin-top: 0.5em
+      transform: translateY(0)
+      min-height: min-content
+
+  &:hover .copy-button
+    opacity: 1
+    visibility: visible
+
+  .copy-button
+    font-family: sans-serif
+    position: absolute
+    display: flex
+    align-items: center
+    top: 50%
+    right: 0
+    transform: translateY(calc(-50% - 1em))
+
+    border-radius: 10px
+    padding: 0.8em
+    margin: 1em
+
+    visibility: hidden
+    opacity: 0
+    transition-property: visibility, opacity, background-color
+    transition-duration: 0.3s
+
+    &:hover
+      background: var(--card-color)
+
+    img
+      width: var(--font-size)
+
+    span
+      line-height: 0
+      font-size: var(--font-size)
+      margin-right: 1em
+
+
+  code
+
+    &.hljs
+      height: 100%
+      font-size: var(--font-size)
+      padding: var(--padding)
+      display: block
+      // Force background color to be custom
+      background-color: var(--background-color) !important
+
+      &.labeled
+        border-radius: 0

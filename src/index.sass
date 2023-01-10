@@ -8,6 +8,11 @@
   --text: #ffffff
   --dark-text: #545454
   --red: #F05555
+  --blue: #0C5D8E
+
+*
+  scrollbar-color: var(--dark-text) var(--background-color)
+  scrollbar-width: auto
 
 body
   color: var(--text)
@@ -23,11 +28,15 @@ html, body, #root
   width: 100%
   box-sizing: border-box
 
+.modal-open
+  overflow: hidden
+
 #root
   display: flex
   margin: auto
   padding: 4em 1em 1em
   max-width: 1440px
+
 
 div.main
   flex-grow: 1

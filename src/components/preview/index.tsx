@@ -9,17 +9,18 @@ import PngLogo from "../../assets/icons/png.svg"
 import ApiLogo from "../../assets/icons/api.svg"
 import {PreviewLink} from "./link";
 import {objectToURLQueryParam} from "../../utils";
+import {ApiRequestModal} from "../api-request-modal";
 
 interface Props {
     config: QRConfig
 }
 
 export function PreviewSidebar(props: Props) {
+    const [modalVisible, setModalVisible] = createSignal(false)
     const [previewImage, setPreviewImage] = createSignal("")
     const [isLoading, setLoadingState] = createSignal(false)
 
     createEffect(async () => {
-        console.log(props.config.size)
         if (!props.config.data) {
             return setPreviewImage("")
         }
@@ -37,6 +38,7 @@ export function PreviewSidebar(props: Props) {
     })
 
     return <Card title="Preview" containerClass={styles.previewContainer}>
+        <ApiRequestModal visible={modalVisible()} onClose={() => setModalVisible(false)} config={props.config}/>
         <div class={styles.qrcodePreview}>
             <Show when={!isLoading()} keyed fallback={<LoadingIcon size={50}/>}>
                 <Show when={previewImage()} keyed fallback={<span>No preview <br/>yet</span>}>
@@ -79,9 +81,7 @@ export function PreviewSidebar(props: Props) {
         <PreviewLink
             title="For developers" description="See how to make your design dynamic with API"
             logo={ApiLogo} buttonText="Show"
-            onClick={() => {
-                // TODO: show modal
-            }}
+            onClick={() => setModalVisible(true)}
         />
     </Card>
 }
