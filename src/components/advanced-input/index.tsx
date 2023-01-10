@@ -14,31 +14,44 @@ export function AdvancedInput(props: Props & Omit<JSX.InputHTMLAttributes<HTMLIn
     let inputRef!: HTMLInputElement;
     const initialValue = props.value
     let debounceTimeout: number;
+    let tooltipVisibilityTimeout: number;
 
     const [isTooltipVisible, setTooltipVisible] = createSignal(false)
     const [tooltipMessage, setTooltipMessage] = createSignal<string>()
-    const resetTooltipMessage = () => {
+
+    const showTooltip = (msg: string) => {
+        clearTimeout(tooltipVisibilityTimeout)
+
+        setTooltipVisible(true)
+        setTooltipMessage(msg)
+    }
+    const hideTooltip = () => {
+        clearTimeout(tooltipVisibilityTimeout)
+
         setTooltipVisible(false)
         // This helps to get rid of issue with tooltip text disappears faster than tooltip
-        setTimeout(() => {
+        tooltipVisibilityTimeout = setTimeout(() => {
             setTooltipMessage(undefined)
         }, 350)
     }
 
-    onCleanup(() => clearTimeout(debounceTimeout))
+
+    onCleanup(() => {
+        clearTimeout(debounceTimeout);
+        clearTimeout(tooltipVisibilityTimeout)
+    })
 
     function handleInput(e: InputEvent & { currentTarget: HTMLInputElement, target: Element }) {
+        clearTimeout(debounceTimeout)
+
         const v = (e.target as HTMLInputElement).value;
         const invalidMessage = props.validate?.(v) ?? "";
 
         if (invalidMessage) {
-            setTooltipVisible(true)
-            setTooltipMessage(invalidMessage)
-            return
+            return showTooltip(invalidMessage)
         }
 
-        resetTooltipMessage()
-        clearTimeout(debounceTimeout)
+        hideTooltip()
         // @ts-ignore
         debounceTimeout = setTimeout(() => props.onInput?.(e), props.debounceTime ?? 2000)
     }
@@ -47,7 +60,7 @@ export function AdvancedInput(props: Props & Omit<JSX.InputHTMLAttributes<HTMLIn
         // Reset input if there was some validation errors
         if (tooltipMessage()) {
             clearTimeout(debounceTimeout)
-            resetTooltipMessage()
+            hideTooltip()
             inputRef.value = String(initialValue)
         }
     }
