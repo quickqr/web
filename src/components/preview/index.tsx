@@ -46,7 +46,7 @@ export function PreviewSidebar(props: Props) {
         </div>
 
         <span class={styles.sizeNote}>
-            Note: preview image does not reflect actual image size
+            Note: images larger than 256px are resized to fit preview window
         </span>
 
         <h1>Export</h1>
