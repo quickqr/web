@@ -1,5 +1,6 @@
 import styles from "./styles.module.sass"
 import {AdvancedInput} from "../../advanced-input";
+import {InfoTooltip} from "../../info-tooltip";
 
 interface Props {
     label: string
@@ -13,6 +14,8 @@ interface Props {
     unit?: string
     min?: number
     max?: number
+
+    tooltipText: string
 }
 
 /* TODO: Validation for length, max size*/
@@ -30,7 +33,10 @@ export function NumberInput(props: Props) {
     }
 
     return <div class={styles.container}>
-        <span>{props.label}</span>
+        <div class={styles.label}>
+            {props.label}
+            <InfoTooltip title={props.label} description={props.tooltipText}/>
+        </div>
         <div class={styles.inputContainer}>
             <AdvancedInput
                 class={styles.input}

@@ -35,6 +35,7 @@ export function AdvancedInput(props: Props & Omit<JSX.InputHTMLAttributes<HTMLIn
     }
 
     function onFocusout() {
+        // Reset input if there was some validation errors
         if (validationMessage()) {
             clearTimeout(debounceTimeout)
             resetValidationMessage()

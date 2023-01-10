@@ -41,13 +41,15 @@ const App: Component = () => {
                             />
                             <NumberInput
                                 label="Image size"
+                                tooltipText="Image size controls how big your image will be"
                                 value={config().size ?? 512}
                                 min={128}
                                 max={4096}
                                 onChange={(n) => setConfig({...config(), size: n})}
                             />
                             <NumberInput
-                                label="Border size"
+                                label="Quiet zone"
+                                tooltipText="Also known as border size, controls padding around the QR code."
                                 value={config().borderSize ?? 30}
                                 min={0}
                                 max={100}
