@@ -1,6 +1,6 @@
 import {QRConfig} from "../../types";
 import styles from "./styles.module.sass"
-import {Codeblock} from "./codeblock";
+import {Codeblock} from "./codeblock/codeblock";
 import {configToCURLRequest, replaceDataWithDummy} from "../../utils";
 import {createEffect, onCleanup, onMount} from "solid-js";
 
@@ -39,7 +39,7 @@ export function ApiRequestModal(props: Props) {
                 href="https://">docs</a>):
             </span>
 
-                <Codeblock label="POST" labelColor="accent-color" code={import.meta.env.VITE_API_URL}/>
+                <Codeblock language="url" label="POST" labelColor="accent-color" code={import.meta.env.VITE_API_URL}/>
 
                 <span>With following request body</span>
 

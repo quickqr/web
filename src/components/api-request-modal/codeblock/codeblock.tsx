@@ -1,21 +1,17 @@
 import "highlight.js/scss/base16/framer.scss"
 import "./codeblock.sass"
 import {createEffect, createSignal, Show} from "solid-js";
-import hljs from "highlight.js/lib/core"
-import hlJSON from "highlight.js/lib/languages/json"
-import CopyIcon from "../../assets/icons/copy.svg"
-// @ts-ignore
-import hlCURL from "highlightjs-curl"
+import CopyIcon from "../../../assets/icons/copy.svg"
+import "./hljs-setup"
+import hljs from "highlight.js/lib/core";
 
 interface Props {
     label?: string;
     labelColor?: "accent-color" | "blue"
     code: string
-    language?: "json" | "curl"
+    language: "json" | "curl" | "url"
 }
 
-hljs.registerLanguage("json", hlJSON)
-hljs.registerLanguage("curl", hlCURL)
 
 // TODO: Make copy button
 // TODO: Implement hiding and showing
@@ -28,7 +24,7 @@ export function Codeblock(props: Props) {
     createEffect(async () => {
         if (props.language && props.code) {
             codeblock.innerHTML = hljs.highlight(props.language, props.code).value || props.code
-        } else codeblock.innerText = props.code
+        }
     })
 
     function copyCode() {
