@@ -52,7 +52,8 @@ const App: Component = () => {
                                 tooltipText="Also known as border size, controls padding around the QR code."
                                 value={config().borderSize ?? 30}
                                 min={0}
-                                max={100}
+                                // 1/10 from the max size of the QR code (4096)
+                                max={400}
                                 onChange={(n) => setConfig({...config(), borderSize: n})}
                             />
                         </Card>
