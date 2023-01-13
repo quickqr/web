@@ -9,9 +9,11 @@ import ApiLogo from "../../assets/icons/api.svg"
 import {PreviewLink} from "./link";
 import {objectToURLQueryParam} from "../../utils";
 import {ApiRequestModal} from "../api-request-modal";
+import {QRConfig} from "../../types";
 
 interface Props {
     config: QRConfig
+    isTyping: boolean
 }
 
 export function PreviewSidebar(props: Props) {
@@ -39,7 +41,7 @@ export function PreviewSidebar(props: Props) {
     return <Card title="Preview" containerClass={styles.previewContainer}>
         <ApiRequestModal visible={modalVisible()} onClose={() => setModalVisible(false)} config={props.config}/>
         <div class={styles.qrcodePreview}>
-            <Show when={!isLoading()} keyed fallback={<LoadingIcon size={50}/>}>
+            <Show when={!props.isTyping && !isLoading()} keyed fallback={<LoadingIcon/>}>
                 <Show when={previewImage()} keyed fallback={<span>No preview <br/>yet</span>}>
                     <img class={styles.imagePreview} src={previewImage()} alt=""/>
                 </Show>

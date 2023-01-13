@@ -5,6 +5,7 @@ import {AdvancedInput} from "../advanced-input";
 
 interface Props {
     onChange: (data: string) => void
+    onTypingStateUpdate: (t: boolean) => void
 }
 
 // TODO: Allow to load files:
@@ -50,6 +51,7 @@ export function DataInput(props: Props) {
                 onInput={(v) => {
                     props.onChange((v.target as HTMLInputElement).value)
                 }}
+                onTypingStateUpdate={props.onTypingStateUpdate}
             />
 
             {/*TODO*/}

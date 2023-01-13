@@ -8,22 +8,30 @@ import {ColorPicker} from "./components/configuration/color-picker";
 import {NumberInput} from "./components/configuration/number-input";
 import {OptionSelect} from "./components/configuration/select";
 import {QRConfig, RecoveryLevel} from "./types";
+import {IconSelectCard} from "./components/icon-select";
 
 // TODO: Add timeout
 const App: Component = () => {
     // TODO: Load config from URL params if any
     const [config, setConfig] = createSignal<QRConfig>({})
+    const [isTyping, setTypingState] = createSignal(false)
 
     return (
         <>
             <Sidebar/>
             <div class="main">
-                <DataInput onChange={(s) => {
-                    if (s != config().data) {
-                        setConfig({...config(), data: s})
-                    }
-                }}/>
+                <DataInput
+                    onChange={(s) => {
+                        if (s != config().data) {
+                            setConfig({...config(), data: s})
+                        }
+                    }}
+                    onTypingStateUpdate={setTypingState}
+                />
                 <section class="configuration">
+                    <div class="col">
+                        <IconSelectCard onChange={(s) => setConfig({...config(), logo: s})} value={config().logo}/>
+                    </div>
                     <div class="col">
                         <Card title="General" containerClass="config-card">
                             <ColorPicker
@@ -72,11 +80,9 @@ const App: Component = () => {
                             />
                         </Card>
                     </div>
-                    <div class="col">
-                    </div>
                 </section>
             </div>
-            <PreviewSidebar config={config()}/>
+            <PreviewSidebar isTyping={isTyping()} config={config()}/>
         </>
     );
 };
