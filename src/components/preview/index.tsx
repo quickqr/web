@@ -1,6 +1,5 @@
 import {Card} from "../card";
 import styles from "./styles.module.sass"
-import {QRConfig} from "../../types";
 import {createEffect, createSignal, Show} from "solid-js";
 import axios from "axios";
 import {LoadingIcon} from "../loading-icon";

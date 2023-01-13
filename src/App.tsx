@@ -3,10 +3,11 @@ import {createSignal} from "solid-js";
 import {Sidebar} from "./components/sidebar";
 import {DataInput} from "./components/data-input";
 import {PreviewSidebar} from "./components/preview";
-import {QRConfig} from "./types";
 import {Card} from "./components/card";
 import {ColorPicker} from "./components/configuration/color-picker";
 import {NumberInput} from "./components/configuration/number-input";
+import {OptionSelect} from "./components/configuration/select";
+import {QRConfig, RecoveryLevel} from "./types";
 
 // TODO: Add timeout
 const App: Component = () => {
@@ -55,6 +56,19 @@ const App: Component = () => {
                                 // 1/10 from the max size of the QR code (4096)
                                 max={400}
                                 onChange={(n) => setConfig({...config(), borderSize: n})}
+                            />
+                            <OptionSelect
+                                label="Error correction"
+                                description="QR Code has error correction capability to restore data if the code is dirty or damaged."
+                                options={Object.keys(RecoveryLevel)}
+                                selected={Object.values(RecoveryLevel).indexOf(config().recoveryLevel ?? RecoveryLevel.Medium)}
+                                onChange={(s: string) => {
+                                    console.log(Object.values(RecoveryLevel).indexOf(config().recoveryLevel ?? RecoveryLevel.Medium))
+                                    setConfig({
+                                        ...config,
+                                        recoveryLevel: s.toLowerCase() as RecoveryLevel
+                                    })
+                                }}
                             />
                         </Card>
                     </div>

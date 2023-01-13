@@ -1,4 +1,3 @@
-import {QRConfig} from "../../types";
 import styles from "./styles.module.sass"
 import {Codeblock} from "./codeblock/codeblock";
 import {configToCURLRequest, replaceDataWithDummy} from "../../utils";
