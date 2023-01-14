@@ -71,9 +71,8 @@ const App: Component = () => {
                                 options={Object.keys(RecoveryLevel)}
                                 selected={Object.values(RecoveryLevel).indexOf(config().recoveryLevel ?? RecoveryLevel.Medium)}
                                 onChange={(s: string) => {
-                                    console.log(Object.values(RecoveryLevel).indexOf(config().recoveryLevel ?? RecoveryLevel.Medium))
                                     setConfig({
-                                        ...config,
+                                        ...config(),
                                         recoveryLevel: s.toLowerCase() as RecoveryLevel
                                     })
                                 }}
