@@ -39,9 +39,12 @@ export function OptionSelect(props: Props) {
             <div class={styles.optionList} classList={{[styles.shown]: isDropdownOpened()}}>
                 <For each={props.options}>
                     {
-                        (item, index) => <div onClick={() => props.onChange(props.options[index()])}>
-                            {item}
-                        </div>
+                        (item, index) => {
+                            return <div
+                                onClick={() => index() != props.selected && props.onChange(props.options[index()])}>
+                                {item}
+                            </div>
+                        }
                     }
                 </For>
             </div>
