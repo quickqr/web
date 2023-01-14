@@ -18,7 +18,6 @@ interface Props {
     isTyping: boolean
 }
 
-// TODO: Is it worth to cache image on the client
 export function PreviewSidebar(props: Props) {
     const [modalVisible, setModalVisible] = createSignal(false)
     const [previewImage, setPreviewImage] = createSignal<Blob>()

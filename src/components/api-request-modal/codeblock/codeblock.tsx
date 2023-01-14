@@ -13,9 +13,6 @@ interface Props {
 }
 
 
-// TODO: Make copy button
-// TODO: Implement hiding and showing
-// TODO: Lock scrolling on body when opened
 export function Codeblock(props: Props) {
     const [isCopiedLabelShown, setCopiedLabelVisibility] = createSignal(false)
     let hideLabelTimeout: number;

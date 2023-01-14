@@ -10,7 +10,6 @@ import {OptionSelect} from "./components/configuration/select";
 import {QRConfig, RecoveryLevel} from "./types";
 import {IconSelectCard} from "./components/icon-select";
 
-// TODO: Add timeout
 const App: Component = () => {
     const [config, setConfig] = createSignal<QRConfig>(Object.fromEntries(new URLSearchParams(location.search)))
     const [isTyping, setTypingState] = createSignal(false)

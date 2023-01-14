@@ -18,9 +18,6 @@ interface Props {
     tooltipText: string
 }
 
-/* TODO: Validation for length, max size*/
-
-// TODO: reset if invalid length
 export function NumberInput(props: Props) {
     const integerRE = /^\d+$/
 

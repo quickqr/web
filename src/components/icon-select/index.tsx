@@ -9,7 +9,7 @@ interface Props {
     onChange: (s: string) => void
 }
 
-// TODO: Can we use blob here instead of appending "data:image/..." every time?
+// FIXME: Can we use blob here instead of appending "data:image/..." every time?
 export function IconSelectCard(props: Props) {
     let fileInput!: HTMLInputElement;
     const [validImage, setValidImage] = createSignal(false)

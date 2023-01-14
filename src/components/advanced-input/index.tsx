@@ -13,7 +13,6 @@ interface Props {
     onInput: (s: string) => void
 }
 
-// TODO: Do not clear timeout on update
 // HTML input but with some enhancements such as input debouncing and validation with error message
 export function AdvancedInput(props: Props & Omit<JSX.InputHTMLAttributes<HTMLInputElement>, "ref" | "onInput">) {
     let inputRef!: HTMLInputElement
