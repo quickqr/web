@@ -25,6 +25,7 @@ export function NumberInput(props: Props) {
     const integerRE = /^\d+$/
 
     function validateNumber(s: string): string | undefined {
+        console.log(s)
         if (!integerRE.test(s)) return "This field should be integer value"
         const n = parseInt(s)
 
@@ -41,6 +42,7 @@ export function NumberInput(props: Props) {
             <AdvancedInput
                 class={styles.input}
                 validate={validateNumber}
+                clearOnFocusout
                 value={props.value}
                 onInput={(v) => props.onChange(parseInt(v))}
             />
