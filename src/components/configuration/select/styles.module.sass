@@ -2,6 +2,7 @@
   display: flex
   justify-content: space-between
   cursor: pointer
+  position: relative
 
   --padding: 0.8em
   --icon-margin: 1em
@@ -18,13 +19,12 @@
       margin-right: var(--icon-margin)
 
   .dropdown
-    position: relative
     display: flex
     align-items: center
 
     .icon
-      position: relative
       z-index: 1
+      position: relative
       transition: 0.3s transform
 
       &.rotated
