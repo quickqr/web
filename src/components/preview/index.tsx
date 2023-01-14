@@ -1,4 +1,5 @@
 import {Card} from "../card";
+import {Callout} from "../callout";
 import styles from "./styles.module.sass"
 import {createEffect, createSignal, Show} from "solid-js";
 import axios, {AxiosError} from "axios";
@@ -8,8 +9,8 @@ import PngLogo from "../../assets/icons/png.svg"
 import ApiLogo from "../../assets/icons/api.svg"
 import {PreviewLink} from "./link";
 import {objectToURLQueryParam} from "../../utils";
-import {ApiRequestModal} from "../api-request-modal";
 import {ErrorResponse, QRConfig} from "../../types";
+import {ApiRequestModal} from "../api-request-modal";
 
 interface Props {
     config: QRConfig
@@ -36,6 +37,8 @@ export function PreviewSidebar(props: Props) {
             const response = await axios.post("/generate",
                 {
                     ...props.config,
+                    // Do not allow to send empty string
+                    logo: props.config.logo || undefined
                 },
                 {
                     responseType: "blob"
@@ -52,6 +55,8 @@ export function PreviewSidebar(props: Props) {
             } else {
                 setErrorMessage("Unknown error occurred.")
             }
+
+            setPreviewImage("")
         }
 
         setLoadingState(false)
@@ -68,10 +73,9 @@ export function PreviewSidebar(props: Props) {
             </Show>
         </div>
 
-        {/* TOOD: Put error message here (if present) */}
-        <span class={styles.note} classList={{[styles.error]: !!errorMessage()}}>
-            {errorMessage() || "Note: images larger than 256px are resized to fit preview window"}
-        </span>
+        <Callout type={errorMessage() ? "error" : "info"}>
+            {errorMessage() || "Images larger than 256px are resized to fit preview window"}
+        </Callout>
 
         <h1>Export</h1>
         <PreviewLink

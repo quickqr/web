@@ -78,7 +78,11 @@ export function AdvancedInput(props: Props & Omit<JSX.InputHTMLAttributes<HTMLIn
             inputRef.value = String(initialValue)
         }
 
-        props.onInput((e.target as HTMLInputElement).value)
+        const value = (e.target as HTMLInputElement).value;
+        if (props.value != value) {
+            props.onInput(value)
+        }
+
     }
 
     return <div class={`${styles.container} ${props.class}`}>

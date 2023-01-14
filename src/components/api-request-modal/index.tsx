@@ -3,7 +3,7 @@ import {Codeblock} from "./codeblock/codeblock";
 import {configToCURLRequest, sanitizeConfig} from "../../utils";
 import {createEffect, onCleanup, onMount} from "solid-js";
 import {QRConfig} from "../../types";
-import QuestionSvg from "../../assets/icons/question.svg?component-solid"
+import {Callout} from "../callout";
 
 interface Props {
     visible: boolean;
@@ -47,14 +47,11 @@ export function ApiRequestModal(props: Props) {
 
                 <Codeblock language="json" code={JSON.stringify(sanitizeConfig(props.config), null, 2)}/>
 
-                <div class={styles.note}>
-                    <QuestionSvg/>
-                    <span>
-                        Attached files such as image icon will be filtered because of big amount of data
-                        that cannot be shown here.
-                        Attach them manually before request, or use URL instead.
-                    </span>
-                </div>
+                <Callout type="info">
+                    Attached files such as image icon will be filtered because of big amount of data
+                    that cannot be shown here.
+                    Attach them manually before request, or use URL instead.
+                </Callout>
 
                 <span>Or use make a request directly from command line</span>
                 <Codeblock language="curl" label="cURL" labelColor="blue" code={configToCURLRequest(props.config)}/>

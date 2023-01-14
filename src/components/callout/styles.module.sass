@@ -1,0 +1,25 @@
+.callout
+  display: flex
+  align-items: center
+  border-radius: 20px
+  padding: 1em 1.5em
+  background-color: var(--background-color)
+  color: var(--dark-text)
+  min-height: 2em
+
+  svg
+    width: 2em
+    height: 2em
+
+    g
+      clip-path: border-box
+
+    path
+      fill: var(--orange)
+
+  &.error svg path
+    fill: var(--red)
+
+  div.data
+    margin-left: 1em
+    width: 90%
