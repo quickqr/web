@@ -1,0 +1,47 @@
+.container
+  h4
+    margin: 0
+    color: var(--dark-text)
+
+  .fileSelect
+    display: flex
+
+    .button
+      display: flex
+      align-items: center
+      text-align: center
+      justify-content: center
+
+      background-color: var(--background-color)
+      border-radius: 20px
+      margin-right: 1em
+      cursor: pointer
+
+      transition: 0.5s opacity
+
+      width: 80px
+      height: 80px
+      aspect-ratio: 1 / 1
+
+
+      img
+        font-size: 1rem
+        max-width: 100%
+        color: var(--red)
+        max-height: 100%
+        border-radius: 20px
+
+      &.withImage
+        box-sizing: border-box
+        border: 1px solid var(--dark-text)
+        padding: 0.5em
+        background-color: transparent
+
+
+      &:hover
+        opacity: 0.8
+
+
+    span
+      color: var(--dark-text)
+      font-size: 15px

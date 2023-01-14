@@ -49,7 +49,7 @@ export function DataInput(props: Props) {
                 onClick={() => setSelectedFilename(null)}
                 onFocus={() => setSelectedFilename(null)}
                 onInput={(v) => {
-                    props.onChange((v.target as HTMLInputElement).value)
+                    props.onChange(v)
                 }}
                 onTypingStateUpdate={props.onTypingStateUpdate}
             />

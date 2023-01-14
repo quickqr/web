@@ -10,11 +10,12 @@ interface Props {
     onTypingStateUpdate?: (t: boolean) => void
     // Validator should return error message if input data is invalid
     validate?: (v: string) => string | undefined
+    onInput: (s: string) => void
 }
 
 // TODO: Do not clear timeout on update
 // HTML input but with some enhancements such as input debouncing and validation with error message
-export function AdvancedInput(props: Props & Omit<JSX.InputHTMLAttributes<HTMLInputElement>, "ref">) {
+export function AdvancedInput(props: Props & Omit<JSX.InputHTMLAttributes<HTMLInputElement>, "ref" | "onInput">) {
     let inputRef!: HTMLInputElement
     let debounceTimeout: number
     let tooltipVisibilityTimeout: number
@@ -53,8 +54,8 @@ export function AdvancedInput(props: Props & Omit<JSX.InputHTMLAttributes<HTMLIn
     function handleInput(e: InputEvent & { currentTarget: HTMLInputElement, target: Element }) {
         if (!isTyping()) setTypingState(true)
         clearTimeout(debounceTimeout)
-
-        const v = (e.target as HTMLInputElement).value;
+        const t = (e.target as HTMLInputElement);
+        const v = t.value;
         const invalidMessage = props.validate?.(v) ?? "";
 
         if (invalidMessage) {
@@ -64,12 +65,11 @@ export function AdvancedInput(props: Props & Omit<JSX.InputHTMLAttributes<HTMLIn
         hideTooltip()
         debounceTimeout = setTimeout(() => {
             setTypingState(false)
-            // @ts-ignore
-            props.onInput?.(e)
+            props.onInput(t.value)
         }, props.debounceTime ?? 2000)
     }
 
-    function onFocusout() {
+    function onFocusout(e: FocusEvent) {
         clearTimeout(debounceTimeout)
         setTooltipVisible(false)
         setTypingState(false)
@@ -77,6 +77,8 @@ export function AdvancedInput(props: Props & Omit<JSX.InputHTMLAttributes<HTMLIn
         if (tooltipMessage() && props.clearOnFocusout) {
             inputRef.value = String(initialValue)
         }
+
+        props.onInput((e.target as HTMLInputElement).value)
     }
 
     return <div class={`${styles.container} ${props.class}`}>
@@ -96,7 +98,7 @@ export function AdvancedInput(props: Props & Omit<JSX.InputHTMLAttributes<HTMLIn
                 props.onfocusin?.(e)
             }}
             onfocusout={(e) => {
-                onFocusout();
+                onFocusout(e);
                 // @ts-ignore
                 props.onfocusout?.(e)
             }}

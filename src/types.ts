@@ -16,3 +16,7 @@ export interface QRConfig {
     borderSize?: number
     recoveryLevel?: RecoveryLevel
 }
+
+export interface ErrorResponse {
+    message: string
+}

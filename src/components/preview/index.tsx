@@ -1,7 +1,7 @@
 import {Card} from "../card";
 import styles from "./styles.module.sass"
 import {createEffect, createSignal, Show} from "solid-js";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import {LoadingIcon} from "../loading-icon";
 import LinkLogo from "../../assets/icons/link.svg"
 import PngLogo from "../../assets/icons/png.svg"
@@ -9,33 +9,53 @@ import ApiLogo from "../../assets/icons/api.svg"
 import {PreviewLink} from "./link";
 import {objectToURLQueryParam} from "../../utils";
 import {ApiRequestModal} from "../api-request-modal";
-import {QRConfig} from "../../types";
+import {ErrorResponse, QRConfig} from "../../types";
 
 interface Props {
     config: QRConfig
     isTyping: boolean
 }
 
+// TODO: Is it worth to cache image on the client
 export function PreviewSidebar(props: Props) {
     const [modalVisible, setModalVisible] = createSignal(false)
     const [previewImage, setPreviewImage] = createSignal("")
+    const [errorMessage, setErrorMessage] = createSignal<string>()
     const [isLoading, setLoadingState] = createSignal(false)
+
+    // To take of load from the server, preview sidebar will download icons from URL on the client and send raw images
 
     createEffect(async () => {
         if (!props.config.data) {
             return setPreviewImage("")
         }
 
+        setLoadingState(true)
+
         try {
-            setLoadingState(true)
-
-            const response = await axios.post("/generate", props.config, {responseType: "blob"})
+            const response = await axios.post("/generate",
+                {
+                    ...props.config,
+                },
+                {
+                    responseType: "blob"
+                }
+            )
             setPreviewImage(URL.createObjectURL(response.data))
-
-            setLoadingState(false)
-        } catch {
-            // TODO: Handle error messages from server
+            setErrorMessage(undefined)
+        } catch (e) {
+            e = e as AxiosError;
+            if (axios.isAxiosError(e) && e.response) {
+                const t = await e.response.data.text();
+                const msg = (JSON.parse(t) as ErrorResponse).message;
+                setErrorMessage("Error: " + msg)
+            } else {
+                setErrorMessage("Unknown error occurred.")
+            }
         }
+
+        setLoadingState(false)
+
     })
 
     return <Card title="Preview" containerClass={styles.previewContainer}>
@@ -49,8 +69,8 @@ export function PreviewSidebar(props: Props) {
         </div>
 
         {/* TOOD: Put error message here (if present) */}
-        <span class={styles.note}>
-            Note: images larger than 256px are resized to fit preview window
+        <span class={styles.note} classList={{[styles.error]: !!errorMessage()}}>
+            {errorMessage() || "Note: images larger than 256px are resized to fit preview window"}
         </span>
 
         <h1>Export</h1>
