@@ -76,6 +76,7 @@ export function PreviewSidebar(props: Props) {
         <h1>Export</h1>
         <PreviewLink
             title="As image" description="Save the QR as a file"
+            tooltipTitle="Export QR as image"
             logo={PngLogo} buttonText="Save"
             isDisabled={!previewImage()}
             onClick={() => {
@@ -89,6 +90,7 @@ export function PreviewSidebar(props: Props) {
         />
         <PreviewLink
             title="As preset"
+            tooltipTitle="Export preset"
             description="Copy link to this page to share your work (no attached files)"
             logo={LinkLogo} buttonText="Copy" buttonClickedText="Copied"
             onClick={() => {
@@ -100,7 +102,9 @@ export function PreviewSidebar(props: Props) {
             }}
         />
         <PreviewLink
-            title="For developers" description="See how to make your design dynamic with API"
+            title="For developers"
+            tooltipTitle="API Request"
+            description="See how to make your design dynamic with API"
             logo={ApiLogo} buttonText="Show"
             onClick={() => setModalVisible(true)}
         />

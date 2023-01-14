@@ -1,8 +1,10 @@
 import styles from "./styles.module.sass"
 import {createSignal} from "solid-js";
+import {InfoTooltip} from "../../info-tooltip";
 
 interface Props {
     title: string
+    tooltipTitle: string
     description: string
     logo: string
     buttonText: string
@@ -30,8 +32,10 @@ export function PreviewLink(props: Props) {
     return <div onClick={onButtonClick} class={styles.linkContainer}>
         <img src={props.logo} alt=""/>
         <div class={styles.text}>
-            <span class={styles.title}>{props.title}</span>
-            <span class={styles.description}>{props.description}</span>
+            <span class={styles.title}>
+                {props.title}
+            </span>
+            <InfoTooltip title={props.tooltipTitle} description={props.description}/>
         </div>
         <button classList={{"accent": !props.isDisabled}} class={styles.actionButton}>{buttonText()}</button>
     </div>

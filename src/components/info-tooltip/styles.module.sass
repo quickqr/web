@@ -1,9 +1,11 @@
 .info
-  display: flex
-  align-items: center
+  display: inline
+  cursor: pointer
   position: relative
 
   img
+    display: inline-block
+    vertical-align: middle
     margin-left: 0.5rem
     width: 1rem
     height: 1rem
@@ -16,9 +18,10 @@
     visibility: hidden
     width: 15em
     top: 100%
-    left: calc(100%)
+    right: 0
 
     // Styling
+    white-space: break-spaces
     transition: 0.3s
     background: var(--background-color)
     border-radius: 20px
@@ -32,5 +35,6 @@
       color: var(--dark-text)
 
   &:hover  .tooltip
+    transition-delay: 0.5s
     visibility: visible
     opacity: 1
