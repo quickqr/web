@@ -12,8 +12,7 @@ import {IconSelectCard} from "./components/icon-select";
 
 // TODO: Add timeout
 const App: Component = () => {
-    // TODO: Load config from URL params if any
-    const [config, setConfig] = createSignal<QRConfig>({})
+    const [config, setConfig] = createSignal<QRConfig>(Object.fromEntries(new URLSearchParams(location.search)))
     const [isTyping, setTypingState] = createSignal(false)
 
     return (
@@ -21,6 +20,7 @@ const App: Component = () => {
             <Sidebar/>
             <div class="main">
                 <DataInput
+                    value={config().data}
                     onChange={(s) => {
                         if (s != config().data) {
                             setConfig({...config(), data: s})

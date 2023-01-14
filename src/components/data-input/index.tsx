@@ -4,6 +4,7 @@ import {createSignal, onCleanup} from "solid-js";
 import {AdvancedInput} from "../advanced-input";
 
 interface Props {
+    value?: string
     onChange: (data: string) => void
     onTypingStateUpdate: (t: boolean) => void
 }
@@ -41,6 +42,7 @@ export function DataInput(props: Props) {
     return <Card title="QR Code data" containerClass={styles.container}>
         <div class={styles.inputRow}>
             <AdvancedInput
+                value={props.value}
                 type="text"
                 autocomplete="off"
                 class={styles.input}

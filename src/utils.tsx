@@ -1,16 +1,18 @@
 import {QRConfig} from "./types";
 
 export function objectToURLQueryParam(obj: any): string {
-    return Object.entries(obj).map(([k, v]) => `${k}=${encodeURIComponent((v as any).toString())}`).join("&")
+    return Object.entries(obj).map(([k, v]) => {
+        return `${k}=${encodeURIComponent((v as any).toString())}`
+    }).join("&")
 }
 
 // Puts `data` as the first key in the config
-export function sanitizeConfig(c: QRConfig): QRConfig {
-    let {data, logo, ...config} = c;
+export function sanitizeConfig(c: QRConfig, sanitizeData = true): QRConfig {
+    let {data, ...config} = c;
 
-    if (!isValidUrl(logo)) logo = undefined
+    if (!isValidUrl(config.logo)) delete config.logo
 
-    return {data: "<change me>", logo, ...config}
+    return {data: sanitizeData ? "<change me>" : data, ...config}
 }
 
 export function configToCURLRequest(c: QRConfig): string {

@@ -8,7 +8,7 @@ import LinkLogo from "../../assets/icons/link.svg"
 import PngLogo from "../../assets/icons/png.svg"
 import ApiLogo from "../../assets/icons/api.svg"
 import {PreviewLink} from "./link";
-import {objectToURLQueryParam} from "../../utils";
+import {objectToURLQueryParam, sanitizeConfig} from "../../utils";
 import {ErrorResponse, QRConfig} from "../../types";
 import {ApiRequestModal} from "../api-request-modal";
 
@@ -99,9 +99,7 @@ export function PreviewSidebar(props: Props) {
             logo={LinkLogo} buttonText="Copy" buttonClickedText="Copied"
             onClick={() => {
                 // TODO: check if logo is an URL, if so, add to the config
-                const {logo, ...config} = props.config;
-
-                const link = `${document.location.href}?${objectToURLQueryParam(config)}`
+                const link = `${document.location.origin}?${objectToURLQueryParam(sanitizeConfig(props.config, false))}`
                 navigator.clipboard.writeText(link)
             }}
         />
