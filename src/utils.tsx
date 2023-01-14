@@ -40,5 +40,3 @@ export function isValidImage(base64: string): Promise<boolean> {
         img.src = "data:image/png;base64," + base64
     })
 }
-
-
