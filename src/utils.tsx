@@ -1,5 +1,9 @@
 import {QRConfig} from "./types";
 
+// Used to validate images
+const img = new Image()
+
+
 export function objectToURLQueryParam(obj: any): string {
     return Object.entries(obj).map(([k, v]) => {
         return `${k}=${encodeURIComponent((v as any).toString())}`
@@ -21,6 +25,20 @@ export function configToCURLRequest(c: QRConfig): string {
 
 export function isValidUrl(url?: string): boolean {
     return new RegExp("^(https?:\\/\\/)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)$").test(url ?? "")
+}
+
+export function isValidImage(base64: string): Promise<boolean> {
+    return new Promise((res, _) => {
+        img.onload = () => {
+            res(true)
+        }
+
+        img.onerror = () => {
+            res(false)
+        }
+
+        img.src = "data:image/png;base64," + base64
+    })
 }
 
 

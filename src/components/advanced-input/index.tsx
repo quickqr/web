@@ -77,13 +77,11 @@ export function AdvancedInput(props: Props & Omit<JSX.InputHTMLAttributes<HTMLIn
         if (tooltipMessage() && props.clearOnFocusout) {
             hideTooltip()
             inputRef.value = String(initialValue)
+            return
         }
 
         const value = (e.target as HTMLInputElement).value;
-        if (props.value != value) {
-            props.onInput(value)
-        }
-
+        props.onInput(value)
     }
 
     return <div class={`${styles.container} ${props.class}`}>

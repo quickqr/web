@@ -1,8 +1,8 @@
 import {Card} from "../card";
 import styles from "./styles.module.sass"
 import {AdvancedInput} from "../advanced-input";
-import {isValidUrl} from "../../utils";
-import {Show} from "solid-js";
+import {isValidImage, isValidUrl} from "../../utils";
+import {createEffect, createSignal, Show} from "solid-js";
 
 interface Props {
     value?: string
@@ -11,6 +11,11 @@ interface Props {
 
 export function IconSelectCard(props: Props) {
     let fileInput!: HTMLInputElement;
+    const [validImage, setValidImage] = createSignal(false)
+
+    createEffect(async () => {
+        setValidImage(!!props.value && await isValidImage(props.value))
+    })
 
     function onFileInput(event: Event & { currentTarget: HTMLInputElement }) {
         const file = event.currentTarget.files![0];
@@ -20,9 +25,14 @@ export function IconSelectCard(props: Props) {
         reader.readAsDataURL(file)
 
 
-        reader.onload = () => {
-            console.log(reader.result)
+        reader.onload = async () => {
             const base64 = String(reader.result!).split(",")[1]
+
+            if (!await isValidImage(base64)) {
+                // TODO: Use own modal window with alert
+                alert("Unable to load this image")
+                return
+            }
 
             props.onChange(base64)
         }
@@ -38,9 +48,9 @@ export function IconSelectCard(props: Props) {
             <div
                 onClick={() => fileInput.click()}
                 class={styles.button}
-                classList={{[styles.withImage]: (props.value && !isValidUrl(props.value)) as boolean}}
+                classList={{[styles.withImage]: !!props.value && validImage()}}
             >
-                <Show when={props.value && !isValidUrl(props.value)} fallback={<span>Click to <br/> select</span>}
+                <Show when={props.value && validImage()} fallback={<span>Click to <br/> select</span>}
                       keyed>
                     <img src={"data:image/png;base64," + props.value} alt="Bad image"/>
                 </Show>
@@ -55,15 +65,12 @@ export function IconSelectCard(props: Props) {
 
         <AdvancedInput
             value={isValidUrl(props.value) ? props.value : ""}
-            clearOnFocusout={false}
+            clearOnFocusout
             placeholder="Enter URL for the image"
             validate={(s) => {
                 if (s && !isValidUrl(s)) return "Please, enter a valid URL"
             }}
             onInput={(v) => props.onChange(v)}
         />
-
-        {/* TODO: */}
-        {/*<h5>Quick picks</h5>*/}
     </Card>
 }
