@@ -48,9 +48,9 @@ export function ApiRequestModal(props: Props) {
                 <Codeblock language="json" code={JSON.stringify(sanitizeConfig(props.config), null, 2)}/>
 
                 <Callout type="info">
-                    Attached files such as image icon will be filtered because of big amount of data
+                    Attached files such as logo image will be filtered because of big amount of data
                     that cannot be shown here.
-                    Attach them manually before request, or use URL instead.
+                    Attach them manually before request, or use URL instead (if possible)
                 </Callout>
 
                 <span>Or use make a request directly from command line</span>
