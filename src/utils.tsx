@@ -5,14 +5,16 @@ export function objectToURLQueryParam(obj: any): string {
 }
 
 // Puts `data` as the first key in the config
-export function replaceDataWithDummy(c: QRConfig): QRConfig {
-    const {data, ...config} = c;
+export function sanitizeConfig(c: QRConfig): QRConfig {
+    let {data, logo, ...config} = c;
 
-    return {data: "<change me>", ...config}
+    if (!isValidUrl(logo)) logo = undefined
+
+    return {data: "<change me>", logo, ...config}
 }
 
 export function configToCURLRequest(c: QRConfig): string {
-    return `curl -X POST -H 'Content-Type: application/json' -d '${JSON.stringify(replaceDataWithDummy(c))}'`
+    return `curl -X POST -H 'Content-Type: application/json' -d '${JSON.stringify(sanitizeConfig(c))}'`
 }
 
 export function isValidUrl(url?: string): boolean {
