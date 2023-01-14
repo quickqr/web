@@ -9,6 +9,7 @@ interface Props {
     onChange: (s: string) => void
 }
 
+// TODO: Can we use blob here instead of appending "data:image/..." every time?
 export function IconSelectCard(props: Props) {
     let fileInput!: HTMLInputElement;
     const [validImage, setValidImage] = createSignal(false)
@@ -49,6 +50,8 @@ export function IconSelectCard(props: Props) {
                 onClick={() => fileInput.click()}
                 class={styles.button}
                 classList={{[styles.withImage]: !!props.value && validImage()}}
+                // Needed for accessibility and tab navigation
+                tabIndex="0"
             >
                 <Show when={props.value && validImage()} fallback={<span>Click to <br/> select</span>}
                       keyed>
