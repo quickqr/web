@@ -15,7 +15,7 @@ interface Props {
     isDisabled?: boolean
 }
 
-export function PreviewLink(props: Props) {
+export function ExportItem(props: Props) {
     const [buttonText, setButtonText] = createSignal(props.buttonText)
 
     function onButtonClick() {
@@ -29,7 +29,7 @@ export function PreviewLink(props: Props) {
         props.onClick()
     }
 
-    return <div onClick={onButtonClick} class={styles.linkContainer}>
+    return <div onClick={onButtonClick} class={styles.container}>
         <img src={props.logo} alt=""/>
         <div class={styles.text}>
             <span class={styles.title}>

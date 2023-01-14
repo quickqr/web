@@ -7,7 +7,8 @@ import {LoadingIcon} from "../loading-icon";
 import LinkLogo from "../../assets/icons/link.svg"
 import PngLogo from "../../assets/icons/png.svg"
 import ApiLogo from "../../assets/icons/api.svg"
-import {PreviewLink} from "./link";
+import CopySvg from "../../assets/icons/copy.svg"
+import {ExportItem} from "./export-item";
 import {objectToURLQueryParam, sanitizeConfig} from "../../utils";
 import {ErrorResponse, QRConfig} from "../../types";
 import {ApiRequestModal} from "../api-request-modal";
@@ -20,7 +21,7 @@ interface Props {
 // TODO: Is it worth to cache image on the client
 export function PreviewSidebar(props: Props) {
     const [modalVisible, setModalVisible] = createSignal(false)
-    const [previewImage, setPreviewImage] = createSignal("")
+    const [previewImage, setPreviewImage] = createSignal<Blob>()
     const [errorMessage, setErrorMessage] = createSignal<string>()
     const [isLoading, setLoadingState] = createSignal(false)
 
@@ -28,7 +29,7 @@ export function PreviewSidebar(props: Props) {
 
     createEffect(async () => {
         if (!props.config.data) {
-            return setPreviewImage("")
+            return setPreviewImage(undefined)
         }
 
         setLoadingState(true)
@@ -44,7 +45,8 @@ export function PreviewSidebar(props: Props) {
                     responseType: "blob"
                 }
             )
-            setPreviewImage(URL.createObjectURL(response.data))
+            setPreviewImage(response.data)
+            // setPreviewImage(URL.createObjectURL(response.data))
             setErrorMessage(undefined)
         } catch (e) {
             e = e as AxiosError;
@@ -56,7 +58,7 @@ export function PreviewSidebar(props: Props) {
                 setErrorMessage("Unknown error occurred.")
             }
 
-            setPreviewImage("")
+            setPreviewImage(undefined)
         }
 
         setLoadingState(false)
@@ -68,7 +70,7 @@ export function PreviewSidebar(props: Props) {
         <div class={styles.qrcodePreview}>
             <Show when={!props.isTyping && !isLoading()} keyed fallback={<LoadingIcon/>}>
                 <Show when={previewImage()} keyed fallback={<span>No preview <br/>yet</span>}>
-                    <img class={styles.imagePreview} src={previewImage()} alt=""/>
+                    <img class={styles.imagePreview} src={URL.createObjectURL(previewImage() ?? new Blob())} alt=""/>
                 </Show>
             </Show>
         </div>
@@ -78,21 +80,37 @@ export function PreviewSidebar(props: Props) {
         </Callout>
 
         <h1>Export</h1>
-        <PreviewLink
+        <ExportItem
             title="As image" description="Save the QR as a file"
             tooltipTitle="Export QR as image"
             logo={PngLogo} buttonText="Save"
             isDisabled={!previewImage()}
             onClick={() => {
                 const a = document.createElement("a")
-                a.href = previewImage()
+                a.href = URL.createObjectURL(previewImage() ?? new Blob())
                 a.download = "quick-qr.png"
                 a.click()
 
                 a.remove()
             }}
         />
-        <PreviewLink
+        {
+            "ClipboardItem" in window && <ExportItem
+                title="To clipboard"
+                tooltipTitle="Copy to clipboard"
+                description="Copy generated QR code directly to clipboard"
+                logo={CopySvg} buttonText="Copy" buttonClickedText="Copied"
+                isDisabled={!previewImage()}
+                onClick={() => {
+                    navigator.clipboard.write([
+                        new window.ClipboardItem({
+                            "image/png": previewImage()!
+                        })
+                    ])
+                }}
+            />
+        }
+        <ExportItem
             title="As preset"
             tooltipTitle="Export preset"
             description="Copy link to this page to share your work (no attached files)"
@@ -103,7 +121,7 @@ export function PreviewSidebar(props: Props) {
                 navigator.clipboard.writeText(link)
             }}
         />
-        <PreviewLink
+        <ExportItem
             title="For developers"
             tooltipTitle="API Request"
             description="See how to make your design dynamic with API"
