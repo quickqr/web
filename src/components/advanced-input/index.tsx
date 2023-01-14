@@ -19,7 +19,6 @@ export function AdvancedInput(props: Props & Omit<JSX.InputHTMLAttributes<HTMLIn
     let inputRef!: HTMLInputElement
     let debounceTimeout: number
     let tooltipVisibilityTimeout: number
-    const initialValue = props.value
 
     const [isTooltipVisible, setTooltipVisible] = createSignal(false)
     const [tooltipMessage, setTooltipMessage] = createSignal<string>()
@@ -81,7 +80,9 @@ export function AdvancedInput(props: Props & Omit<JSX.InputHTMLAttributes<HTMLIn
         }
 
         const value = (e.target as HTMLInputElement).value;
-        props.onInput(value)
+        if (props.value != inputRef.value) {
+            props.onInput(value)
+        }
     }
 
     return <div class={`${styles.container} ${props.class}`}>
