@@ -1,5 +1,5 @@
 import styles from "./styles.module.sass"
-import Logo from "../../assets/icons/logo.svg"
+import Logo from "../../assets/favicon.ico"
 import GithubIcon from "../../assets/icons/github.svg?component-solid"
 import ApiIcon from "../../assets/icons/api.svg?component-solid"
 import packageInfo from "../../../package.json"
@@ -14,12 +14,11 @@ export function Sidebar() {
 
         <div>
             <SidebarLink logo={GithubIcon} title={"Source"} href={packageInfo.homepage} forceAccentColor/>
-            {/* TODO: Decide what URL to set for this (probably from .env and "/docs" by default) */}
             <SidebarLink
                 forceAccentColor
                 logo={ApiIcon}
-                title={"Docs"}
-                href={"https://todo.com"}
+                title="Docs"
+                href={import.meta.env.VITE_API_HOST + "/docs"}
             />
         </div>
     </div>
