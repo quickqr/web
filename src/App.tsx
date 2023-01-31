@@ -10,8 +10,18 @@ import {OptionSelect} from "./components/configuration/select";
 import {QRConfig, RecoveryLevel} from "./types";
 import {IconSelectCard} from "./components/icon-select";
 
+function configFromURLSearchParams(): QRConfig {
+    const params = Object.fromEntries(new URLSearchParams(location.search))
+    const c: QRConfig = {...params}
+    c.quietZone = +(params.quietZone ?? 30)
+    c.size = +(params.size ?? 512)
+    if (params.logoSpace == "true") c.logoSpace = true
+
+    return c
+}
+
 const App: Component = () => {
-    const [config, setConfig] = createSignal<QRConfig>(Object.fromEntries(new URLSearchParams(location.search)))
+    const [config, setConfig] = createSignal<QRConfig>(configFromURLSearchParams())
     const [isTyping, setTypingState] = createSignal(false)
 
     return (
@@ -58,11 +68,11 @@ const App: Component = () => {
                             <NumberInput
                                 label="Quiet zone"
                                 tooltipText="Also known as border size, controls padding around the QR code."
-                                value={config().borderSize ?? 30}
+                                value={config().quietZone ?? 30}
                                 min={0}
                                 // 1/10 from the max size of the QR code (4096)
                                 max={400}
-                                onChange={(n) => setConfig({...config(), borderSize: n})}
+                                onChange={(n) => setConfig({...config(), quietZone: n})}
                             />
                             <OptionSelect
                                 label="Error correction"

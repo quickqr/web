@@ -12,8 +12,8 @@ export interface QRConfig {
     backgroundColor?: string,
     foregroundColor?: string
     logo?: string
-    logoScale?: number
-    borderSize?: number
+    logoSpace?: boolean
+    quietZone?: number
     recoveryLevel?: RecoveryLevel
 }
 

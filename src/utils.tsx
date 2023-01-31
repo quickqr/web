@@ -6,7 +6,9 @@ const img = new Image()
 
 export function objectToURLQueryParam(obj: any): string {
     return Object.entries(obj).map(([k, v]) => {
-        return `${k}=${encodeURIComponent((v as any).toString())}`
+        if (!v || typeof v == "boolean") return
+
+        return `${k}=${encodeURIComponent((v ?? "" as any).toString())}`
     }).join("&")
 }
 
