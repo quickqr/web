@@ -79,7 +79,7 @@ export function AdvancedInput(props: Props & Omit<JSX.InputHTMLAttributes<HTMLIn
         }
 
         const value = (e.target as HTMLInputElement).value;
-        if (props.value != inputRef.value) {
+        if ((inputRef.value != "" || props.value != undefined) && props.value != inputRef.value) {
             props.onInput(value)
         }
     }
@@ -91,7 +91,7 @@ export function AdvancedInput(props: Props & Omit<JSX.InputHTMLAttributes<HTMLIn
         </div>
         <input
             {...props}
-            class={""}
+            value={props.value ?? ""}
             ref={inputRef}
             onFocusIn={(e) => {
                 if (tooltipMessage()) setTooltipVisible(true)

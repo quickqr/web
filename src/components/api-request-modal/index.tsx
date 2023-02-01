@@ -41,7 +41,7 @@ export function ApiRequestModal(props: Props) {
             </span>
 
                 <Codeblock language="url" label="POST" labelColor="accent-color"
-                           code={import.meta.env.VITE_API_URL + "/generate"}/>
+                           code={import.meta.env.VITE_API_HOST + "/generate"}/>
 
                 <span>With following request body</span>
 

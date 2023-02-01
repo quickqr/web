@@ -7,7 +7,7 @@ interface Props {
     value?: number
     nullable?: boolean
     placeholder?: string
-    onChange: (s: number) => void
+    onChange: (s?: number) => void
     //
     /*
     * Unit to show right to input.
@@ -44,7 +44,7 @@ export function NumberInput(props: Props) {
                 validate={validateNumber}
                 clearOnFocusout
                 value={props.value}
-                onInput={(v) => v && props.onChange(parseInt(v))}
+                onInput={(v) =>  props.onChange(v == "" ? undefined : parseInt(v))}
             />
             {props.unit &&
                 <span class={styles.unit}>{props.unit}</span>

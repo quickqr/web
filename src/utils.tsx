@@ -1,8 +1,11 @@
-import {QRConfig} from "./types";
+import {QRConfig, RecoveryLevel} from "./types";
 
 // Used to validate images
 const img = new Image()
 
+export function parseEnumFromString<T extends {[s: number]: string}>(s: string, e: {[s: number] : string }): T | undefined {
+    return Object.values(e).find((v) => v == s) as T
+}
 
 export function objectToURLQueryParam(obj: any): string {
     return Object.entries(obj)

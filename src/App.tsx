@@ -7,36 +7,58 @@ import {Card} from "./components/card";
 import {ColorPicker} from "./components/configuration/color-picker";
 import {NumberInput} from "./components/configuration/number-input";
 import {OptionSelect} from "./components/configuration/select";
-import {QRConfig, RecoveryLevel} from "./types";
+import {QRConfig, RecoveryLevel, Shape} from "./types";
 import {IconSelectCard} from "./components/icon-select";
+import {parseEnumFromString} from "./utils";
 
 
-function configFromURLSearchParams(): QRConfig {
+function initializeConfig(): QRConfig {
     const params = Object.fromEntries(new URLSearchParams(location.search))
-    // @ts-ignore
     const c: QRConfig = {...params}
-    c.quietZone = +(params.quietZone ?? 30)
-    c.size = +(params.size ?? 512)
-    c.version = 0
+
+    for (let f in c) {
+        // @ts-ignore
+        if (typeof(c[f]) == "number") {
+            if (params[f]) { // @ts-ignore
+                c[f] = +(params.size)
+            }
+        }
+    }
+    if (params.logoSpace) c.logoSpace = params.logoSpace == "true"
 
     if (params.version) {
-        let v = +(params.version ?? 0)
+        let v = +(params.version)
         if (v >= 0 && v <= 40)
             c.version = v
     }
 
-    if (!Object.values(RecoveryLevel).includes(params.recoveryLevel as RecoveryLevel)) {
-        c.recoveryLevel = RecoveryLevel.Medium
-    }
+    c.recoveryLevel = parseEnumFromString(params.recoveryLevel, RecoveryLevel)
+    c.finder = parseEnumFromString(params.finder, Shape)
+    c.module = parseEnumFromString(params.finder, Shape)
 
-    c.logoSpace = params.logoSpace == "true"
 
     return c
 }
 
 const App: Component = () => {
-    const [config, setConfig] = createSignal<QRConfig>(configFromURLSearchParams())
+    const [config, setConfig] = createSignal<QRConfig>(initializeConfig())
     const [isTyping, setTypingState] = createSignal(false)
+
+
+    function shapeSelect(label: string, description: string, field: "finder" | "module") {
+        return <OptionSelect
+            label={label}
+            description={description}
+            options={Object.keys(Shape)}
+            selected={Object.values(Shape).indexOf(config()[field] ?? Shape.Square)}
+            onChange={(s: string) => {
+                setConfig({
+                    ...config(),
+                    [field]: s.toLowerCase() as Shape
+                })
+            }}
+        />
+    }
 
     return (
         <>
@@ -73,10 +95,13 @@ const App: Component = () => {
                                 label="Version"
                                 tooltipText="Version controls maximum capacity of a QR code."
                                 placeholder="Auto"
-                                value={config().version != 0 ? config().version : undefined}
+                                value={config().version}
                                 min={1}
                                 max={40}
-                                onChange={(n) => setConfig({...config(), version: n})}
+                                onChange={(n) => {
+                                    console.log(n)
+                                    setConfig({...config(), version: n})
+                                }}
                             />
                         </Card>
                     </div>
@@ -116,6 +141,8 @@ const App: Component = () => {
                                 max={400}
                                 onChange={(n) => setConfig({...config(), quietZone: n})}
                             />
+                            {shapeSelect("Finders shape", "Controls appearance of big squares in corners.", "finder")}
+                            {shapeSelect("Module shape", "Controls appearance of little squares.", "module")}
                         </Card>
                     </div>
                 </section>

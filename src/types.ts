@@ -1,3 +1,5 @@
+import {Part} from "solid-js/store";
+
 export enum RecoveryLevel {
     Low = "low",
     Medium = "medium",
@@ -12,19 +14,21 @@ export enum Shape {
     Circle = "circle",
 }
 
-export interface QRConfig {
-    data?: string
-    size?: number,
-    backgroundColor?: string,
-    foregroundColor?: string
-    logo?: string
-    logoSpace?: boolean
-    quietZone?: number
-    recoveryLevel?: RecoveryLevel
-    finder?: Shape
+interface ApiFields {
+    data: string
+    size: number,
+    backgroundColor: string,
+    foregroundColor: string
+    logo: string
+    logoSpace: boolean
+    quietZone: number
+    recoveryLevel: RecoveryLevel
+    finder: Shape
     module: Shape
     version: number;
 }
+
+export type QRConfig = Partial<ApiFields>
 
 export interface ErrorResponse {
     message: string
