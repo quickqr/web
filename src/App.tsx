@@ -15,6 +15,11 @@ function configFromURLSearchParams(): QRConfig {
     const c: QRConfig = {...params}
     c.quietZone = +(params.quietZone ?? 30)
     c.size = +(params.size ?? 512)
+
+    if (!Object.values(RecoveryLevel).includes(params.recoveryLevel as RecoveryLevel)) {
+        c.recoveryLevel = RecoveryLevel.Medium
+    }
+
     if (params.logoSpace == "true") c.logoSpace = true
 
     return c
