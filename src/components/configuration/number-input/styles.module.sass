@@ -8,17 +8,16 @@
     align-items: center
 
   .inputContainer
-    width: 30%
     display: flex
     align-items: center
     justify-content: flex-end
 
     span.unit
+      margin-left: 0.7em
       color: var(--dark-text)
       text-transform: uppercase
 
     .input
-      margin-right: 0.7em
 
       input
         width: 5em
@@ -28,6 +27,14 @@
         padding: 0.3em 1em
         font-size: 15px
         background: transparent
+
+        &::placeholder
+          opacity: 1
+          transition: 1s color
+          color: var(--dark-text)
+
+        &:focus::placeholder
+          color: transparent
 
         -moz-appearance: textfield
 

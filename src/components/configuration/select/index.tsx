@@ -17,10 +17,10 @@ export function OptionSelect(props: Props) {
     function showDropdown() {
         setDropdownOpened(true)
         document.onmousedown = () => {
+            document.onmousedown = null
             // Timeout for the input value to change (or it will lag a bit when changing)
             setTimeout(() => {
                 setDropdownOpened(false)
-                document.onmousedown = null
             }, 200)
         }
     }

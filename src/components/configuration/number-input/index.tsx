@@ -4,7 +4,9 @@ import {InfoTooltip} from "../../info-tooltip";
 
 interface Props {
     label: string
-    value: number
+    value?: number
+    nullable?: boolean
+    placeholder?: string
     onChange: (s: number) => void
     //
     /*
@@ -22,7 +24,7 @@ export function NumberInput(props: Props) {
     const integerRE = /^\d+$/
 
     function validateNumber(s: string): string | undefined {
-        console.log(s)
+        if (s == "" && props.nullable) return
         if (!integerRE.test(s)) return "This field should be integer value"
         const n = parseInt(s)
 
@@ -38,12 +40,15 @@ export function NumberInput(props: Props) {
         <div class={styles.inputContainer}>
             <AdvancedInput
                 class={styles.input}
+                placeholder={props.placeholder}
                 validate={validateNumber}
                 clearOnFocusout
                 value={props.value}
-                onInput={(v) => props.onChange(parseInt(v))}
+                onInput={(v) => v && props.onChange(parseInt(v))}
             />
-            <span class={styles.unit}>{props.unit ?? "px"}</span>
+            {props.unit &&
+                <span class={styles.unit}>{props.unit}</span>
+            }
         </div>
     </div>
 }

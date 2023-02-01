@@ -6,6 +6,12 @@ export enum RecoveryLevel {
 
 }
 
+export enum Shape {
+    Square = "square",
+    Rounded = "rounded",
+    Circle = "circle",
+}
+
 export interface QRConfig {
     data?: string
     size?: number,
@@ -15,6 +21,9 @@ export interface QRConfig {
     logoSpace?: boolean
     quietZone?: number
     recoveryLevel?: RecoveryLevel
+    finder?: Shape
+    module: Shape
+    version: number;
 }
 
 export interface ErrorResponse {

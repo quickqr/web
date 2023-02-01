@@ -74,7 +74,7 @@ export function AdvancedInput(props: Props & Omit<JSX.InputHTMLAttributes<HTMLIn
         // Reset input if there was some validation errors
         if (tooltipMessage() && props.clearOnFocusout) {
             hideTooltip()
-            inputRef.value = String(props.value || "")
+            inputRef.value = String(props.value ?? "")
             return
         }
 

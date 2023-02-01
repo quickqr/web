@@ -23,7 +23,6 @@
     align-items: center
 
     .icon
-      z-index: 1
       position: relative
       transition: 0.3s transform
 
@@ -32,9 +31,11 @@
 
 
     .optionList
+      z-index: 1
       position: absolute
-      top: calc(var(--padding) * -1)
+      top: calc(100% + 10px)
       right: calc(var(--padding) * -1)
+      overflow-y: auto
 
       background-color: var(--card-color)
       color: var(--dark-text)
