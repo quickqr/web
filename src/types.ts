@@ -26,6 +26,7 @@ interface ApiFields {
     finder: Shape
     module: Shape
     version: number;
+    gap: number
 }
 
 export type QRConfig = Partial<ApiFields>

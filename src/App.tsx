@@ -16,14 +16,11 @@ function initializeConfig(): QRConfig {
     const params = Object.fromEntries(new URLSearchParams(location.search))
     const c: QRConfig = {...params}
 
-    for (let f in c) {
-        // @ts-ignore
-        if (typeof(c[f]) == "number") {
-            if (params[f]) { // @ts-ignore
-                c[f] = +(params.size)
-            }
-        }
-    }
+    if (params.quietZone) c.quietZone = +params.quietZone
+    if (params.version) c.version = +params.version
+    if (params.size) c.size = +params.size
+    if (params.gap) c.gap = +params.gap
+
     if (params.logoSpace) c.logoSpace = params.logoSpace == "true"
 
     if (params.version) {
@@ -143,6 +140,15 @@ const App: Component = () => {
                             />
                             {shapeSelect("Finders shape", "Controls appearance of big squares in corners.", "finder")}
                             {shapeSelect("Module shape", "Controls appearance of little squares.", "module")}
+                            <NumberInput
+                                unit="%"
+                                label="Gap"
+                                tooltipText="Padding between modules in percents relative to module size"
+                                value={config().gap ?? 0}
+                                min={0}
+                                max={50}
+                                onChange={(n) => setConfig({...config(), gap: n})}
+                            />
                         </Card>
                     </div>
                 </section>
