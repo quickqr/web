@@ -5,11 +5,12 @@ const img = new Image()
 
 
 export function objectToURLQueryParam(obj: any): string {
-    return Object.entries(obj).map(([k, v]) => {
-        if (!v || typeof v == "boolean") return
-
-        return `${k}=${encodeURIComponent((v ?? "" as any).toString())}`
-    }).join("&")
+    return Object.entries(obj)
+        .filter(([_, v]) => v != undefined && (v != false))
+        .map(([k, v]) => {
+            return `${k}=${encodeURIComponent((v ?? "" as any).toString())}`
+        })
+        .join("&")
 }
 
 // Puts `data` as the first key in the config

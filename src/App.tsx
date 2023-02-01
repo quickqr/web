@@ -20,7 +20,7 @@ function configFromURLSearchParams(): QRConfig {
         c.recoveryLevel = RecoveryLevel.Medium
     }
 
-    if (params.logoSpace == "true") c.logoSpace = true
+    c.logoSpace = params.logoSpace == "true"
 
     return c
 }
