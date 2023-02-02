@@ -1,5 +1,5 @@
 import type {Component} from 'solid-js';
-import {createSignal} from "solid-js";
+import {createSignal, Switch} from "solid-js";
 import {Sidebar} from "./components/sidebar";
 import {DataInput} from "./components/data-input";
 import {PreviewSidebar} from "./components/preview";
@@ -11,6 +11,7 @@ import {QRConfig, RecoveryLevel, Shape} from "./types";
 import {IconSelectCard} from "./components/icon-select";
 import {parseEnumFromString} from "./utils";
 import {ConfigRow} from "./components/configuration/row";
+import {SwitchInput} from "./components/switch";
 
 
 function initializeConfig(): QRConfig {
@@ -33,7 +34,6 @@ function initializeConfig(): QRConfig {
     c.recoveryLevel = parseEnumFromString(params.recoveryLevel, RecoveryLevel)
     c.finder = parseEnumFromString(params.finder, Shape)
     c.module = parseEnumFromString(params.finder, Shape)
-
 
     return c
 }
@@ -116,6 +116,10 @@ const App: Component = () => {
                                     setConfig({...config(), foregroundColor: v})
                                 }}
                             />
+
+                            <ConfigRow label="Logo Space" description="No modules will be drawn behind the logo">
+                                <SwitchInput value={config().logoSpace ?? false}  onChange={(v) => setConfig({...config(), logoSpace: v})} />
+                            </ConfigRow>
                             <ConfigRow label="Image size" description="Image size controls how big your image will be">
                                 <NumberInput
                                     unit="px"
@@ -125,6 +129,7 @@ const App: Component = () => {
                                     onChange={(n) => setConfig({...config(), size: n})}
                                 />
                             </ConfigRow>
+
                             {/* TODO: Add check that value is less than image size */}
                             <ConfigRow label="Quiet zone" description="Also known as border size, controls padding around the QR code.">
                                 <NumberInput

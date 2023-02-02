@@ -1,0 +1,25 @@
+.container
+  cursor: pointer
+  width: 2.5em
+  height: 1em
+  background-color: var(--card-color)
+  border-radius: 20px
+  padding: 2px
+  border: 1px solid var(--dark-text)
+  transition: 0.2s
+
+  .thumb
+    transition: 0.2s
+    width: 1em
+    height: 1em
+    border-radius: 50%
+    background-color: var(--dark-text)
+    margin-left: 0
+    transform: translateX(0%)
+
+  &.active
+    background-color: var(--background-color)
+
+    .thumb
+      margin-left: 100%
+      transform: translateX(-100%)
