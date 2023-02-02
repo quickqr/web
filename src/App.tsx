@@ -33,7 +33,7 @@ function initializeConfig(): QRConfig {
 
     c.recoveryLevel = parseEnumFromString(params.recoveryLevel, RecoveryLevel)
     c.finder = parseEnumFromString(params.finder, Shape)
-    c.module = parseEnumFromString(params.finder, Shape)
+    c.module = parseEnumFromString(params.module, Shape)
 
     return c
 }
