@@ -1,14 +1,12 @@
-.container
-  display: flex
-  justify-content: space-between
-  cursor: pointer
-  position: relative
 
+.dropdown
+  cursor: pointer
   --padding: 0.8em
   --icon-margin: 1em
 
-  .label
-    display: flex
+  display: flex
+  position: relative
+  align-items: center
 
   .input
     display: flex
@@ -18,56 +16,52 @@
       color: var(--dark-text)
       margin-right: var(--icon-margin)
 
-  .dropdown
-    display: flex
-    align-items: center
+  .icon
+    position: relative
+    transition: 0.3s transform
 
-    .icon
-      position: relative
-      transition: 0.3s transform
+    &.rotated
+      transform: rotate(180deg)
 
-      &.rotated
+
+  .optionList
+    z-index: 1
+    position: absolute
+    top: calc(100% + 10px)
+    right: calc(var(--padding) * -1)
+    overflow-y: auto
+
+    background-color: var(--card-color)
+    color: var(--dark-text)
+    box-shadow: 0 0 2px var(--dark-text)
+    border-radius: 15px
+
+
+    opacity: 0
+    visibility: hidden
+    transition-property: visibility, opacity
+    transition-duration: 0.2s
+
+    &.shown
+      opacity: 1
+      visibility: visible
+
+    div
+      padding: var(--padding)
+      padding-right: calc(var(--padding) + var(--icon-margin))
+      display: flex
+      align-items: center
+      justify-content: space-between
+      transition: 0.5s background-color
+
+      &:first-child
+        border-radius: 15px 15px 0 0
+
+      &:last-child
+        border-radius: 0 0 15px 15px
+
+      &:hover
+        background-color: var(--background-color)
+
+      svg
         transform: rotate(180deg)
-
-
-    .optionList
-      z-index: 1
-      position: absolute
-      top: calc(100% + 10px)
-      right: calc(var(--padding) * -1)
-      overflow-y: auto
-
-      background-color: var(--card-color)
-      color: var(--dark-text)
-      box-shadow: 0 0 2px var(--dark-text)
-      border-radius: 15px
-
-
-      opacity: 0
-      visibility: hidden
-      transition-property: visibility, opacity
-      transition-duration: 0.2s
-
-      &.shown
-        opacity: 1
-        visibility: visible
-
-      div
-        padding: var(--padding)
-        padding-right: calc(var(--padding) + var(--icon-margin))
-        display: flex
-        align-items: center
-        justify-content: space-between
-        transition: 0.5s background-color
-
-        &:first-child
-          border-radius: 15px 15px 0 0
-
-        &:last-child
-          border-radius: 0 0 15px 15px
-
-        &:hover
-          background-color: var(--background-color)
-
-        svg
-          transform: rotate(180deg)

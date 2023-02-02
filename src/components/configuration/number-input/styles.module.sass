@@ -1,44 +1,29 @@
 .container
   display: flex
   align-items: center
-  justify-content: space-between
+  justify-content: flex-end
 
-  .label
-    display: flex
-    align-items: center
+  span.unit
+    margin-left: 0.7em
+    color: var(--dark-text)
+    text-transform: uppercase
 
-  .inputContainer
-    display: flex
-    align-items: center
-    justify-content: flex-end
-
-    span.unit
-      margin-left: 0.7em
+  .input
+    input
+      width: 5em
+      text-align: center
+      border-radius: 7px
       color: var(--dark-text)
-      text-transform: uppercase
+      padding: 0.1em 1em
+      font-size: 15px
+      background: transparent
 
-    .input
-
-      input
-        width: 5em
-        text-align: center
-        border-radius: 7px
+      &::placeholder
+        opacity: 1
+        transition: 1s color
         color: var(--dark-text)
-        padding: 0.1em 1em
-        font-size: 15px
-        background: transparent
 
-        &::placeholder
-          opacity: 1
-          transition: 1s color
-          color: var(--dark-text)
+      &:focus::placeholder
+        color: transparent
 
-        &:focus::placeholder
-          color: transparent
-
-        -moz-appearance: textfield
-
-//&::-webkit-outer-spin-button,
-//&::-webkit-inner-spin-button
-//  -webkit-appearance: none
-//  margin: 0
+      -moz-appearance: textfield

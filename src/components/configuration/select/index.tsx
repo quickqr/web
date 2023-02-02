@@ -1,11 +1,8 @@
 import {createSignal, For} from "solid-js";
 import styles from "./styles.module.sass"
-import {InfoTooltip} from "../../info-tooltip";
 import ChevronSvg from "../../../assets/icons/chevron.svg?component-solid"
 
 interface Props {
-    label: string
-    description: string
     options: string[]
     selected?: number
     onChange: (s: string) => void
@@ -25,13 +22,7 @@ export function OptionSelect(props: Props) {
         }
     }
 
-    return <div class={styles.container}>
-        <div class={styles.label}>
-            {props.label}
-            <InfoTooltip title={props.label} description={props.description}/>
-        </div>
-
-        <div class={styles.dropdown}>
+    return <div class={styles.dropdown}>
             <div onClick={showDropdown} class={styles.input}>
                 <span>{props.options[props.selected ?? 0]}</span>
                 <ChevronSvg class={styles.icon} classList={{[styles.rotated]: isDropdownOpened()}}/>
@@ -48,6 +39,5 @@ export function OptionSelect(props: Props) {
                     }
                 </For>
             </div>
-        </div>
     </div>
 }

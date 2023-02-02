@@ -10,6 +10,7 @@ import {OptionSelect} from "./components/configuration/select";
 import {QRConfig, RecoveryLevel, Shape} from "./types";
 import {IconSelectCard} from "./components/icon-select";
 import {parseEnumFromString} from "./utils";
+import {ConfigRow} from "./components/configuration/row";
 
 
 function initializeConfig(): QRConfig {
@@ -42,10 +43,8 @@ const App: Component = () => {
     const [isTyping, setTypingState] = createSignal(false)
 
 
-    function shapeSelect(label: string, description: string, field: "finder" | "module") {
+    function shapeSelect(field: "finder" | "module") {
         return <OptionSelect
-            label={label}
-            description={description}
             options={Object.keys(Shape)}
             selected={Object.values(Shape).indexOf(config()[field] ?? Shape.Square)}
             onChange={(s: string) => {
@@ -73,33 +72,32 @@ const App: Component = () => {
                 <section class="configuration">
                     <div class="col">
                         <IconSelectCard onChange={(s) => setConfig({...config(), logo: s})} value={config().logo}/>
-                        <Card title="Advanced" containerClass="config-card">
-                            <OptionSelect
-                                label="Error correction"
-                                description="QR Code has error correction capability to restore data if the code is dirty or damaged."
-                                options={Object.keys(RecoveryLevel)}
-                                selected={Object.values(RecoveryLevel).indexOf(config().recoveryLevel ?? RecoveryLevel.Medium)}
-                                onChange={(s: string) => {
-                                    setConfig({
-                                        ...config(),
-                                        recoveryLevel: s.toLowerCase() as RecoveryLevel
-                                    })
-                                }}
-                            />
-                            <NumberInput
-                                unit={undefined}
-                                nullable
-                                label="Version"
-                                tooltipText="Version controls maximum capacity of a QR code."
-                                placeholder="Auto"
-                                value={config().version}
-                                min={1}
-                                max={40}
-                                onChange={(n) => {
-                                    console.log(n)
-                                    setConfig({...config(), version: n})
-                                }}
-                            />
+                        <Card title="Advanced">
+                            <ConfigRow label="Error correction" description="QR Code has error correction capability to restore data if the code is dirty or damaged.">
+                                <OptionSelect
+                                    options={Object.keys(RecoveryLevel)}
+                                    selected={Object.values(RecoveryLevel).indexOf(config().recoveryLevel ?? RecoveryLevel.Medium)}
+                                    onChange={(s: string) => {
+                                        setConfig({
+                                            ...config(),
+                                            recoveryLevel: s.toLowerCase() as RecoveryLevel
+                                        })
+                                    }} />
+                            </ConfigRow>
+                            <ConfigRow label="Version" description="Version controls maximum capacity of a QR code.">
+                                <NumberInput
+                                    unit={undefined}
+                                    nullable
+                                    placeholder="Auto"
+                                    value={config().version}
+                                    min={1}
+                                    max={40}
+                                    onChange={(n) => {
+                                        console.log(n)
+                                        setConfig({...config(), version: n})
+                                    }}
+                                />
+                            </ConfigRow>
                         </Card>
                     </div>
                     <div class="col">
@@ -118,37 +116,43 @@ const App: Component = () => {
                                     setConfig({...config(), foregroundColor: v})
                                 }}
                             />
-                            <NumberInput
-                                unit="px"
-                                label="Image size"
-                                tooltipText="Image size controls how big your image will be"
-                                value={config().size ?? 512}
-                                min={128}
-                                max={4096}
-                                onChange={(n) => setConfig({...config(), size: n})}
-                            />
+                            <ConfigRow label="Image size" description="Image size controls how big your image will be">
+                                <NumberInput
+                                    unit="px"
+                                    value={config().size ?? 512}
+                                    min={128}
+                                    max={4096}
+                                    onChange={(n) => setConfig({...config(), size: n})}
+                                />
+                            </ConfigRow>
                             {/* TODO: Add check that value is less than image size */}
-                            <NumberInput
-                                unit="px"
-                                label="Quiet zone"
-                                tooltipText="Also known as border size, controls padding around the QR code."
-                                value={config().quietZone ?? 30}
-                                min={0}
-                                // 1/10 from the max size of the QR code (4096)
-                                max={400}
-                                onChange={(n) => setConfig({...config(), quietZone: n})}
-                            />
-                            {shapeSelect("Finders shape", "Controls appearance of big squares in corners.", "finder")}
-                            {shapeSelect("Module shape", "Controls appearance of little squares.", "module")}
-                            <NumberInput
-                                unit="%"
-                                label="Gap"
-                                tooltipText="Padding between modules in percents relative to module size"
-                                value={config().gap ?? 0}
-                                min={0}
-                                max={50}
-                                onChange={(n) => setConfig({...config(), gap: n})}
-                            />
+                            <ConfigRow label="Quiet zone" description="Also known as border size, controls padding around the QR code.">
+                                <NumberInput
+                                    unit="px"
+                                    value={config().quietZone ?? 30}
+                                    min={0}
+                                    // 1/10 from the max size of the QR code (4096)
+                                    max={400}
+                                    onChange={(n) => setConfig({...config(), quietZone: n})}
+                                />
+                            </ConfigRow>
+
+                            <ConfigRow label="Finders shape" description="Controls appearance of big squares in corners.">
+                                {shapeSelect("finder")}
+                            </ConfigRow>
+                            <ConfigRow label="Module shape" description="Controls appearance of little squares in corners.">
+                                {shapeSelect("module")}
+                            </ConfigRow>
+
+                            <ConfigRow label="Gap" description="Padding between modules in percents relative to module size">
+                                <NumberInput
+                                    unit="%"
+                                    value={config().gap ?? 0}
+                                    min={0}
+                                    max={50}
+                                    onChange={(n) => setConfig({...config(), gap: n})}
+                                />
+                            </ConfigRow>
                         </Card>
                     </div>
                 </section>
