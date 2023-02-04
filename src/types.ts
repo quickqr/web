@@ -17,6 +17,7 @@ export enum Shape {
     Circle = "circle",
 }
 
+
 export const ModuleShape = {...Shape, Fluid: "fluid"}
 // export type ModuleShape = typeof modShapes
 
@@ -33,6 +34,9 @@ interface ApiFields {
     module: Shape
     version: number;
     gap: number
+    // TODO: Create function that translates gradientDirection number to string
+    gradientDirection: number
+    gradientColors: string[]
 }
 
 export type QRConfig = Partial<ApiFields>

@@ -3,10 +3,11 @@ import {QRConfig, RecoveryLevel} from "./types";
 // Used to validate images
 const img = new Image()
 
-export function parseEnumFromString<T extends {[s: number]: string}>(s: string, e: {[s: number] : string }): T | undefined {
-    return Object.values(e).find((v) => v == s) as T
+export function isValidHexColor(v: string): boolean {
+    return new RegExp("^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$").test(v)
 }
 
+// TODO: Properly handle array value (split in multiple params with same value)
 export function objectToURLQueryParam(obj: any): string {
     return Object.entries(obj)
         .filter(([_, v]) => v != undefined && (v != false))

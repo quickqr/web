@@ -9,40 +9,14 @@ import {NumberInput} from "./components/configuration/number-input";
 import {OptionSelect} from "./components/configuration/select";
 import {QRConfig, RecoveryLevel, Shape, ModuleShape} from "./types";
 import {IconSelectCard} from "./components/icon-select";
-import {parseEnumFromString} from "./utils";
 import {ConfigRow} from "./components/configuration/row";
 import {SwitchInput} from "./components/switch";
+import {urlUtils} from "./url";
 
-
-// TODO:
-//  - Refactor
-//  - Add parsing hex colors for gradient
-function initializeConfig(): QRConfig {
-    const params = Object.fromEntries(new URLSearchParams(location.search))
-    const c: QRConfig = {...params}
-
-    if (params.quietZone) c.quietZone = +params.quietZone
-    if (params.version) c.version = +params.version
-    if (params.size) c.size = +params.size
-    if (params.gap) c.gap = +params.gap
-
-    if (params.logoSpace) c.logoSpace = params.logoSpace == "true"
-
-    if (params.version) {
-        let v = +(params.version)
-        if (v >= 0 && v <= 40)
-            c.version = v
-    }
-
-    c.recoveryLevel = parseEnumFromString(params.recoveryLevel, RecoveryLevel)
-    c.finder = parseEnumFromString(params.finder, Shape)
-    c.module = parseEnumFromString(params.module, ModuleShape)
-
-    return c
-}
 
 const App: Component = () => {
-    const [config, setConfig] = createSignal<QRConfig>(initializeConfig())
+    const [config, setConfig] = createSignal<QRConfig>(urlUtils.parseQRConfig())
+    console.log(config())
     const [isTyping, setTypingState] = createSignal(false)
 
 
