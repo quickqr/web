@@ -8,11 +8,17 @@ export enum RecoveryLevel {
 
 }
 
+// export const Shapes = ["square", "rounded", "circle"]
+// export const ModuleShapes = [...Shapes, "fluid"]
+
 export enum Shape {
     Square = "square",
     Rounded = "rounded",
     Circle = "circle",
 }
+
+export const ModuleShape = {...Shape, Fluid: "fluid"}
+// export type ModuleShape = typeof modShapes
 
 interface ApiFields {
     data: string

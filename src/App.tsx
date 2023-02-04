@@ -7,13 +7,16 @@ import {Card} from "./components/card";
 import {ColorPicker} from "./components/configuration/color-picker";
 import {NumberInput} from "./components/configuration/number-input";
 import {OptionSelect} from "./components/configuration/select";
-import {QRConfig, RecoveryLevel, Shape} from "./types";
+import {QRConfig, RecoveryLevel, Shape, ModuleShape} from "./types";
 import {IconSelectCard} from "./components/icon-select";
 import {parseEnumFromString} from "./utils";
 import {ConfigRow} from "./components/configuration/row";
 import {SwitchInput} from "./components/switch";
 
 
+// TODO:
+//  - Refactor
+//  - Add parsing hex colors for gradient
 function initializeConfig(): QRConfig {
     const params = Object.fromEntries(new URLSearchParams(location.search))
     const c: QRConfig = {...params}
@@ -33,7 +36,7 @@ function initializeConfig(): QRConfig {
 
     c.recoveryLevel = parseEnumFromString(params.recoveryLevel, RecoveryLevel)
     c.finder = parseEnumFromString(params.finder, Shape)
-    c.module = parseEnumFromString(params.module, Shape)
+    c.module = parseEnumFromString(params.module, ModuleShape)
 
     return c
 }
@@ -43,10 +46,11 @@ const App: Component = () => {
     const [isTyping, setTypingState] = createSignal(false)
 
 
-    function shapeSelect(field: "finder" | "module") {
+    function shapeSelect(field: "finder" | "module", ) {
+        const v = field == "finder" ? Shape : ModuleShape;
         return <OptionSelect
-            options={Object.keys(Shape)}
-            selected={Object.values(Shape).indexOf(config()[field] ?? Shape.Square)}
+            options={Object.keys(v)}
+            selected={Object.values(v).indexOf(config()[field] ?? v.Square)}
             onChange={(s: string) => {
                 setConfig({
                     ...config(),
