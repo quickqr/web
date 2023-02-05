@@ -9,9 +9,10 @@ import PngLogo from "../../assets/icons/png.svg"
 import ApiLogo from "../../assets/icons/api.svg"
 import CopySvg from "../../assets/icons/copy.svg"
 import {ExportItem} from "./export-item";
-import {objectToURLQueryParam, sanitizeConfig} from "../../utils";
+import {sanitizeConfig} from "../../utils";
 import {ErrorResponse, QRConfig} from "../../types";
 import {ApiRequestModal} from "../api-request-modal";
+import {urlUtils} from "../../url";
 
 interface Props {
     config: QRConfig
@@ -115,8 +116,7 @@ export function PreviewSidebar(props: Props) {
             description="Copy link to this page to share your work (no attached files)"
             logo={LinkLogo} buttonText="Copy" buttonClickedText="Copied"
             onClick={() => {
-                // TODO: check if logo is an URL, if so, add to the config
-                const link = `${document.location.origin}?${objectToURLQueryParam(sanitizeConfig(props.config, false))}`
+                const link = `${document.location.origin}?${urlUtils.objectToURLQueryParam(sanitizeConfig(props.config, false))}`
                 navigator.clipboard.writeText(link)
             }}
         />

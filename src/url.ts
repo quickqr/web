@@ -1,6 +1,16 @@
 import {ModuleShape, QRConfig, RecoveryLevel, Shape} from "./types";
 import {isValidHexColor} from "./utils";
 
+// TODO: Properly handle array value (split in multiple params with same value)
+function objectToURLQueryParam(obj: any): string {
+    return Object.entries(obj)
+        .filter(([_, v]) => v != undefined && (v != false))
+        .map(([k, v]) => {
+            return `${k}=${encodeURIComponent((v ?? "" as any).toString())}`
+        })
+        .join("&")
+}
+
 function parseQRConfig(): QRConfig {
     const p = new URLSearchParams(location.search)
     const c: QRConfig = {
@@ -33,7 +43,7 @@ function clamp(v: number, min: number, max: number) {
     return Math.max(min, Math.min(v, max));
 }
 
-function parseNum(p: URLSearchParams, name: string, min?: number, max?: number): number | undefined {
+function parseNum(p: URLSearchParams, name: keyof QRConfig, min?: number, max?: number): number | undefined {
     const v = p.get(name)
     if (v == null) return
 
@@ -48,7 +58,7 @@ function parseNum(p: URLSearchParams, name: string, min?: number, max?: number):
     return parsed
 }
 
-export function parseEnum<T extends {[s: number]: string}>(p: URLSearchParams, name: string, e: {[s: number] : string }): T | undefined {
+export function parseEnum<T extends {[s: number]: string}>(p: URLSearchParams, name: keyof QRConfig, e: {[s: number] : string }): T | undefined {
     const s = p.get(name)
     if (s == null) return
 
@@ -57,5 +67,6 @@ export function parseEnum<T extends {[s: number]: string}>(p: URLSearchParams, n
 
 
 export const urlUtils = {
-    parseQRConfig
+    parseQRConfig,
+    objectToURLQueryParam
 }

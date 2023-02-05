@@ -1,20 +1,10 @@
-import {QRConfig, RecoveryLevel} from "./types";
+import {QRConfig} from "./types";
 
 // Used to validate images
 const img = new Image()
 
 export function isValidHexColor(v: string): boolean {
     return new RegExp("^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$").test(v)
-}
-
-// TODO: Properly handle array value (split in multiple params with same value)
-export function objectToURLQueryParam(obj: any): string {
-    return Object.entries(obj)
-        .filter(([_, v]) => v != undefined && (v != false))
-        .map(([k, v]) => {
-            return `${k}=${encodeURIComponent((v ?? "" as any).toString())}`
-        })
-        .join("&")
 }
 
 // Puts `data` as the first key in the config

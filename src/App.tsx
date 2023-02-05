@@ -16,7 +16,6 @@ import {urlUtils} from "./url";
 
 const App: Component = () => {
     const [config, setConfig] = createSignal<QRConfig>(urlUtils.parseQRConfig())
-    console.log(config())
     const [isTyping, setTypingState] = createSignal(false)
 
 
@@ -71,7 +70,6 @@ const App: Component = () => {
                                     min={1}
                                     max={40}
                                     onChange={(n) => {
-                                        console.log(n)
                                         setConfig({...config(), version: n})
                                     }}
                                 />
