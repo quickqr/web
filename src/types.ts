@@ -35,7 +35,7 @@ interface ApiFields {
     version: number;
     gap: number
     // TODO: Create function that translates gradientDirection number to string
-    gradientDirection: number
+    gradient: number
     gradientColors: string[]
 }
 

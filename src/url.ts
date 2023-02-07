@@ -24,7 +24,7 @@ function parseQRConfig(): QRConfig {
         module: parseEnum(p, "module", ModuleShape),
 
 
-        gradientDirection: parseNum(p, "gradientDirection", 0, 1),
+        gradient: parseNum(p, "gradient", 0, 1),
         gradientColors: p.getAll("gradientColors").filter(v => isValidHexColor(v))
     }
 
