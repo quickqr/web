@@ -25,7 +25,11 @@ function parseQRConfig(): QRConfig {
 
 
         gradient: parseNum(p, "gradient", 0, 1),
-        gradientColors: p.getAll("gradientColors").filter(v => isValidHexColor(v))
+    }
+
+    const g = p.getAll("gradientColors").filter(v => isValidHexColor(v))
+    if (g.length > 0) {
+       c.gradientColors = g
     }
 
     // 0 is practically equal to unset (or Auto), so remove it
