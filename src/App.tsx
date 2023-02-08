@@ -1,5 +1,5 @@
 import type {Component} from 'solid-js';
-import {createSignal, Switch} from "solid-js";
+import {createSignal} from "solid-js";
 import {Sidebar} from "./components/sidebar";
 import {DataInput} from "./components/data-input";
 import {PreviewSidebar} from "./components/preview";
@@ -27,7 +27,8 @@ const App: Component = () => {
             onChange={(s: string) => {
                 setConfig({
                     ...config(),
-                    [field]: s.toLowerCase() as Shape
+                    // @ts-ignore
+                    [field]: v[s]
                 })
             }}
         />

@@ -17,9 +17,13 @@ export enum Shape {
     Circle = "circle",
 }
 
+export enum ModShape {
+    Fluid = "fluid" ,
+    Vertical = "vline",
+    Horizontal = "hline"
+}
 
-export const ModuleShape = {...Shape, Fluid: "fluid"}
-// export type ModuleShape = typeof modShapes
+export const ModuleShape = {...Shape, ...ModShape}
 
 interface ApiFields {
     data: string
