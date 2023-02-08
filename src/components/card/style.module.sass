@@ -7,6 +7,22 @@
   background: var(--card-color)
   padding: 2.5em
 
-  h1.title
-    margin-top: 0
-    margin-bottom: 0
+  .title
+    display: flex
+    align-items: center
+
+    button
+      margin-left: 1em
+      display: inline
+      padding: 0.5em 0.8em
+
+      &:hover
+        color: var(--red)
+
+      &.hidden
+        opacity: 0
+
+    h1
+      display: inline
+      margin-top: 0
+      margin-bottom: 0

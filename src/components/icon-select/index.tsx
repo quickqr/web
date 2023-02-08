@@ -44,7 +44,12 @@ export function IconSelectCard(props: Props) {
         }
     }
 
-    return <Card title="Logo" containerClass={styles.container}>
+    return <Card
+                 title="Logo" containerClass={styles.container}
+                 buttonVisible={!!props.value}
+                 buttonTitle="Remove"
+                 buttonClick={() => props.onChange("")}
+        >
         <div class={styles.fileSelect}>
             <div
                 onClick={() => fileInput.click()}
