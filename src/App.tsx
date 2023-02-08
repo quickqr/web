@@ -49,7 +49,7 @@ const App: Component = () => {
                 />
                 <section class="configuration">
                     <div class="col">
-                        <IconSelectCard onChange={(s) => setConfig({...config(), logo: s})} value={config().logo}/>
+                        <IconSelectCard onChange={(s) => {console.log(s);setConfig({...config(), logo: s})}} value={config().logo}/>
                         <Card title="Advanced">
                             <ConfigRow label="Error correction" description="QR Code has error correction capability to restore data if the code is dirty or damaged.">
                                 <OptionSelect
@@ -94,8 +94,8 @@ const App: Component = () => {
                                 }}
                             />
 
-                            <ConfigRow label="Logo Space" description="No modules will be drawn behind the logo">
-                                <SwitchInput value={config().logoSpace ?? false}  onChange={(v) => setConfig({...config(), logoSpace: v})} />
+                            <ConfigRow  disabled={!config().logo} label="Logo Space" description="Nothing will be drawn behind the logo">
+                                <SwitchInput value={config().logoSpace ?? true}  onChange={(v) => setConfig({...config(), logoSpace: v})} />
                             </ConfigRow>
                             <ConfigRow label="Image size" description="Image size controls how big your image will be">
                                 <NumberInput
@@ -108,7 +108,7 @@ const App: Component = () => {
                             </ConfigRow>
 
                             {/* TODO: Add check that value is less than image size */}
-                            <ConfigRow label="Quiet zone" description="Also known as border size, controls padding around the QR code.">
+                            <ConfigRow label="Quiet zone" description="Controls padding around the QR code. Helps scanners to identify QR code">
                                 <NumberInput
                                     unit="px"
                                     value={config().quietZone ?? 30}
@@ -122,11 +122,11 @@ const App: Component = () => {
                             <ConfigRow label="Finders shape" description="Controls appearance of big squares in corners.">
                                 {shapeSelect("finder")}
                             </ConfigRow>
-                            <ConfigRow label="Module shape" description="Controls appearance of little squares in corners.">
+                            <ConfigRow label="Module shape" description="Controls appearance of little squares.">
                                 {shapeSelect("module")}
                             </ConfigRow>
 
-                            <ConfigRow label="Gap" description="Padding between modules in percents relative to module size">
+                            <ConfigRow label="Gap" description="Padding between little squares in percents relative to their size">
                                 <NumberInput
                                     unit="%"
                                     value={config().gap ?? 0}

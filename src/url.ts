@@ -25,6 +25,9 @@ function parseQRConfig(): QRConfig {
 
 
         gradient: parseNum(p, "gradient", 0, 1),
+
+        // Default value for logo space
+        logoSpace: true
     }
 
     const g = p.getAll("gradientColors").filter(v => isValidHexColor(v))

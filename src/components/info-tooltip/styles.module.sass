@@ -4,6 +4,8 @@
   position: relative
 
   img
+    pointer-events: all !important
+    user-select: none
     display: inline-block
     vertical-align: middle
     margin-left: 0.5rem
@@ -12,6 +14,7 @@
 
   .tooltip
     // Position
+    pointer-events: all !important
     position: absolute
     z-index: 10
     opacity: 0
@@ -34,7 +37,8 @@
     span
       color: var(--dark-text)
 
-  &:hover  .tooltip
+  &:hover .tooltip
     transition-delay: 0.5s
     visibility: visible
     opacity: 1
+    filter: saturate(100%) !important
