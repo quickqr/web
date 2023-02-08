@@ -14,8 +14,9 @@ function objectToURLQueryParam(obj: any): string {
 function parseQRConfig(): QRConfig {
     const p = new URLSearchParams(location.search)
     const c: QRConfig = {
-        ...Object.entries(p),
+        ...Object.fromEntries(p.entries()),
         quietZone: parseNum(p, "quietZone"),
+        logoScale: parseNum(p, "logoScale", 50, 100),
         size: parseNum(p, "size"),
         gap: parseNum(p, "gap"),
 

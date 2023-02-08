@@ -97,6 +97,18 @@ const App: Component = () => {
                             <ConfigRow  disabled={!config().logo} label="Logo Space" description="Nothing will be drawn behind the logo">
                                 <SwitchInput value={config().logoSpace ?? true}  onChange={(v) => setConfig({...config(), logoSpace: v})} />
                             </ConfigRow>
+                            <ConfigRow  disabled={!config().logo || !config().logoSpace}
+                                        label="Logo Scale"
+                                        description="Scale of logo relative to its container. Works only when logo space enabled."
+                            >
+                                <NumberInput
+                                    unit="%"
+                                    value={config().logoScale ?? 80}
+                                    min={50}
+                                    max={100}
+                                    onChange={(n) => setConfig({...config(), logoScale: n})}
+                                />
+                            </ConfigRow>
                             <ConfigRow label="Image size" description="Image size controls how big your image will be">
                                 <NumberInput
                                     unit="px"

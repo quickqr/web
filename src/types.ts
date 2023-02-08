@@ -8,9 +8,6 @@ export enum RecoveryLevel {
 
 }
 
-// export const Shapes = ["square", "rounded", "circle"]
-// export const ModuleShapes = [...Shapes, "fluid"]
-
 export enum Shape {
     Square = "square",
     Rounded = "rounded",
@@ -30,8 +27,11 @@ interface ApiFields {
     size: number,
     backgroundColor: string,
     foregroundColor: string
+
     logo: string
     logoSpace: boolean
+    logoScale: number,
+
     quietZone: number
     recoveryLevel: RecoveryLevel
     finder: Shape
